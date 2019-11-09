@@ -16,7 +16,7 @@ insert into dist values ('BAN','DEL',780);
 
 <details>
 <summary>Answer</summary>
-<br/>
+
 ```sql
 Select
 case when src < dest then src else dest end ,

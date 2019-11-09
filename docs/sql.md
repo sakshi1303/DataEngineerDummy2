@@ -27,6 +27,6 @@ group by
 case when src < dest then src else dest end ,
 case when src > dest then src else dest end
 having count(*) >1;
-```
+/```
 </details>
 

@@ -13,6 +13,9 @@ insert into dist values ('DEL','MUM',800);
 insert into dist values ('BAN','DEL',780);
 ```
 ### Remove duplicate distance two cities
+
+{::options parse_block_html="true" /}
+
 <details>
 <summary>Answer</summary>
 ```sql

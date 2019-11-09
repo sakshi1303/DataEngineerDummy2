@@ -14,10 +14,9 @@ insert into dist values ('BAN','DEL',780);
 ```
 ### Remove duplicate distance two cities
 
-{::options parse_block_html="true" /}
-
 <details>
 <summary>Answer</summary>
+<br/>
 ```sql
 Select
 case when src < dest then src else dest end ,

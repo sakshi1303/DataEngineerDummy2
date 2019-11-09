@@ -15,8 +15,7 @@ insert into dist values ('BAN','DEL',780);
 ### Remove duplicate distance two cities
 
 <details>
-<summary>Answer</summary>
-                                
+<summary>Answer</summary>                           
 ```sql
 Select
 case when src < dest then src else dest end ,

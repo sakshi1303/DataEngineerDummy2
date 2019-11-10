@@ -30,3 +30,17 @@ having count(*) >1;
 ```
 </details>
 
+## Sequence of numbers
+
+<details>
+<summary>Answer</summary>
+  
+```sql
+with t(n) as 
+(select 1 as n from dual
+union all
+select n+1 as n from t where n < 25)
+select * from t ;
+```
+</details>
+

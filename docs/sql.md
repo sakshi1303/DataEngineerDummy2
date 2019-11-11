@@ -44,3 +44,26 @@ select * from t ;
 ```
 </details>
 
+## Employee timesheets
+
+```sql
+DROP TABLE TIMESHEETS;
+CREATE TABLE TIMESHEETS(empid NUMBER , timestamps NUMBER , in_out VARCHAR2(50));
+
+insert into timesheets values(1,830,'IN');
+insert into timesheets values(2,900,'IN');
+insert into timesheets values(3,930,'IN');
+insert into timesheets values(1,945,'OUT');
+insert into timesheets values(2,946,'OUT');
+insert into timesheets values(4,1000,'IN');
+```
+
+<details>
+<summary>Answer</summary>
+  
+```sql
+select count(*) from 
+(select dense_rank() over(partition by empid order by timestamps desc) rn , in_out from timesheets t)
+where in_out='IN' and rn=1 ;
+```
+</details>

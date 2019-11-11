@@ -30,4 +30,5 @@
 [BFS](breadthfirstsearch.md)
 [DFS](depthfirstsearch.md)
 [Merge Sort](mergesort.md)
+[Matching parentheses)(matchingparentheses.md)
 

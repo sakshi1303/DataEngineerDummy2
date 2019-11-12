@@ -24,11 +24,12 @@
 
 ## Index
 
-[HeapSort](heapsort.md)
-[SQL](sql.md)
-[Quicksort](Quicksort.md)
-[BFS](breadthfirstsearch.md)
-[DFS](depthfirstsearch.md)
-[Merge Sort](mergesort.md)
-[Matching parentheses](matchingparentheses.md)
+1. [HeapSort](heapsort.md)
+2. [SQL](sql.md)
+3. [Quicksort](Quicksort.md)
+4. [BFS](breadthfirstsearch.md)
+5. [DFS](depthfirstsearch.md)
+6. [Merge Sort](mergesort.md)
+7. [Matching parentheses](matchingparentheses.md)
+8. [Maximum Subarray](maxsubarray.md)
 

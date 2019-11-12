@@ -59,11 +59,24 @@ insert into timesheets values(4,1000,'IN');
 ```
 
 <details>
-<summary>Answer</summary>
+<summary>Answer 1</summary>
   
 ```sql
 select count(*) from 
 (select dense_rank() over(partition by empid order by timestamps desc) rn , in_out from timesheets t)
 where in_out='IN' and rn=1 ;
+```
+</details>
+
+<details>
+<summary>Answer 2</summary>
+  
+```sql
+select sum(time_diff), empid 
+from
+(select 
+lead(timestamps) over(partition by empid order by timestamps) - timestamps time_diff , empid , in_out from timesheets)
+where in_out='IN'
+group by empid ;
 ```
 </details>

@@ -50,7 +50,7 @@ print ("Hello World")
 1. three
 
 1. [ ]  one
-1. [ ] two
+1. [x] two
    - [ ] one
    - [ ] two
 1. [ ] three

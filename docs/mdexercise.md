@@ -66,3 +66,17 @@ foo __bar__
 [bar]: /url2
 
 <http://foo.bar.baz>
+
+## collapsible markdown?
+
+<details><summary>CLICK ME</summary>
+<p>
+
+#### yes, even hidden code blocks!
+
+```python
+print("hello world!")
+```
+
+</p>
+</details>

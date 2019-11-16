@@ -48,3 +48,9 @@ print ("Hello World")
    - one
    - two
 1. three
+
+1. [ ]  one
+1. [ ] two
+   - [ ] one
+   - [ ] two
+1. [ ] three

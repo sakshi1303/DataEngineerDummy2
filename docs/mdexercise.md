@@ -30,7 +30,7 @@ print ("Hello")
 print ("Hello World")
 ```
 
-[Google](https://www.google.co.in/)
+[Google](https://www.google.co.in/ "Goo")
 
 |foo|bar|
 |-|-|
@@ -54,3 +54,15 @@ print ("Hello World")
    - [ ] one
    - [ ] two
 1. [ ] three
+
+foo _bar_
+foo __bar__
+
+~~Hi~~ Hello World
+
+[foo][bar]
+
+[foo]: /url1
+[bar]: /url2
+
+<http://foo.bar.baz>

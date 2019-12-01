@@ -33,6 +33,7 @@
 7. [Matching parentheses](matchingparentheses.md)
 8. [Maximum Subarray](maxsubarray.md)
 9. [Python Tutorial1](PythonTutorial1.md)
-9. [Python Tutorial2](PythonTutorial2.md)
-9. [Python Tutorial3](PythonTutorial3.md)
+10. [Python Tutorial2](PythonTutorial2.md)
+11. [Python Tutorial3](PythonTutorial3.md)
+12. [Python Tutorial4](PythonTutorial4.md)
 

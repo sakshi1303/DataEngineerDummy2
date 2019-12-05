@@ -39,4 +39,5 @@
 13. [Python Tutorial5](PythonTutorial5.md)
 14. [Python Tutorial6](PythonTutorial6.md)
 15. [Python Tutorial7](PythonTutorial7.md)
+16. [Python Tutorial8](PythonTutorial8.md)
 

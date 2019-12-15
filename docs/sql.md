@@ -80,3 +80,35 @@ where in_out='IN'
 group by empid ;
 ```
 </details>
+
+## Batsman Outscoring Himself
+
+```sql
+drop table ipl_batsman_score ;
+create table ipl_batsman_score
+(batsman_id number , match_id number, score number);
+
+insert all
+into ipl_batsman_score values (1,1,10)
+into ipl_batsman_score values (1,2,15)
+into ipl_batsman_score values (1,3,100)
+into ipl_batsman_score values (2,1,101)
+into ipl_batsman_score values (2,2,115)
+into ipl_batsman_score values (2,3,90)
+into ipl_batsman_score values (1,4,45)
+into ipl_batsman_score values (1,5,155)
+into ipl_batsman_score values (1,6,60)
+into ipl_batsman_score values (2,4,10)
+into ipl_batsman_score values (2,5,20)
+into ipl_batsman_score values (2,6,100)
+select 1 from dual;
+```
+
+<details>
+<summary>Answer</summary>
+  
+```sql
+select * from ipl_batsman_score ibs1 where ibs1.score > ALL(select ibs2.score from ipl_batsman_score ibs2 where ibs1.batsman_id=ibs2.batsman_id and ibs1.match_id > ibs2.match_id);
+```
+</details>
+

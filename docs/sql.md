@@ -112,3 +112,35 @@ select * from ipl_batsman_score ibs1 where ibs1.score > ALL(select ibs2.score fr
 ```
 </details>
 
+
+## Begin and End Price 
+
+```sql
+drop table price ;
+create table price ( product_id varchar2(50), price number , effective_date date);
+
+insert into price values (1,400,to_Date('01-Jan-2019','DD-MON-YYYY'));
+insert into price values (2,300,to_Date('01-Jan-2019','DD-MON-YYYY'));
+insert into price values (1,400,to_Date('02-Jan-2019','DD-MON-YYYY'));
+insert into price values (2,300,to_Date('02-Jan-2019','DD-MON-YYYY'));
+insert into price values (1,500,to_Date('03-Jan-2019','DD-MON-YYYY'));
+insert into price values (2,300,to_Date('03-Jan-2019','DD-MON-YYYY'));
+insert into price values (1,500,to_Date('04-Jan-2019','DD-MON-YYYY'));
+insert into price values (2,300,to_Date('04-Jan-2019','DD-MON-YYYY'));
+insert into price values (1,600,to_Date('05-Jan-2019','DD-MON-YYYY'));
+insert into price values (2,400,to_Date('05-Jan-2019','DD-MON-YYYY'));
+insert into price values (1,600,to_Date('06-Jan-2019','DD-MON-YYYY'));
+insert into price values (2,400,to_Date('06-Jan-2019','DD-MON-YYYY'));
+```
+
+<details>
+<summary>Answer</summary>
+  
+```sql
+select distinct product_id , price ,ranges , first_value(effective_Date) over(partition by ranges , product_id order by effective_Date rows between unbounded preceding and UNBOUNDED FOLLOWING ) begin_dt , 
+last_value(effective_Date) over(partition by ranges, product_id order by effective_Date rows between unbounded preceding and UNBOUNDED FOLLOWING ) end_dt from(
+select product_id , price , sum(case when price <> lag then 1 else 0 end)  over(partition by product_id order by effective_date) ranges , effective_Date from (
+select product_id , price , lag(price) over(partition by product_id order by effective_date) lag, effective_Date from price )) order by 3;
+```
+</details>
+

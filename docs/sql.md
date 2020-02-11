@@ -318,3 +318,12 @@ Use audit dimension or hash values to compare data.
 
 </details>
 
+## Difference between range and xrange.
+
+<details>
+<summary>Answer</summary>
+ 
+range returns list and xrange returns generator objects.
+
+</details>
+

@@ -176,7 +176,10 @@ def heapsort(arr):
 
 <details>
 <summary>Answer</summary>
-```
+  
+```bash
 ssh user1@server1 timeout 5 date
 ```
 </details>
+
+

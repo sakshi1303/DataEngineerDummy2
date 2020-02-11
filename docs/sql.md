@@ -296,3 +296,10 @@ select * from tb1 cross join tb2 ;
 <summary>Answer</summary>
 7, 8, 8, 9, 20
 </details>
+
+## Find a file and archive it 
+
+<details>
+<summary>Answer</summary>
+find <Path_To_Old_Files> -type f -mtime +30 | xargs rm -f
+</details>

@@ -350,3 +350,38 @@ sed '/^$/d' even.txt
 ```
 
 </details>
+
+## Three consecutive seats availability in theatres.
+
+```sql
+create table seats(
+seat_id NUMBER GENERATED ALWAYS AS IDENTITY,
+AVAILABILITY VARCHAR2(1)
+);
+
+insert into seats(availability) values('Y');
+insert into seats(availability) values('Y');
+insert into seats(availability) values('N');
+insert into seats(availability) values('Y');
+insert into seats(availability) values('N');
+insert into seats(availability) values('N');
+insert into seats(availability) values('Y');
+insert into seats(availability) values('Y');
+insert into seats(availability) values('Y');
+insert into seats(availability) values('Y');
+insert into seats(availability) values('N');
+insert into seats(availability) values('N');
+insert into seats(availability) values('Y');
+insert into seats(availability) values('Y');
+insert into seats(availability) values('Y');
+insert into seats(availability) values('N');
+```
+
+<details>
+<summary>Answer</summary>
+ 
+```sql
+select * from seats s1 where  s1.availability ='Y' and 'Y'= ALL(select s2.availability from seats s2 where s2.seat_id between s1.seat_id and s1.seat_id + 2 ) order by 1 ;
+```
+
+</details>

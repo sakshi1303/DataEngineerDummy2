@@ -239,3 +239,28 @@ where t.team = mr.teama or t.team=mr.teamb
 order by 1,match_id;
 ```
 </details>
+
+## Users were active in the month of January.
+
+```sql
+create table user_details 
+( user_id NUMBER GENERATED ALWAYS AS IDENTITY,
+start_dt DATE , 
+end_dt DATE );
+
+insert into user_Details(start_dt,end_dt) values ('01-Jul-2019','01-Aug-2019');
+insert into user_Details(start_dt,end_dt) values ('01-Jul-2019','01-Jan-2020');
+insert into user_Details(start_dt,end_dt) values ('01-Jan-2020','31-Jan-2020');
+insert into user_Details(start_dt,end_dt) values ('15-Jan-2020','01-Feb-2020');
+insert into user_Details(start_dt,end_dt) values ('01-Feb-2020','10-Feb-2020');
+insert into user_Details(start_dt,end_dt) values ('01-Jul-2019','10-Feb-2020');
+```
+
+<details>
+<summary>Answer</summary>
+  
+```sql
+select * from user_details where end_dt >= '01-Jan-2020' and start_dt <='31-Jan-2020' ; 
+```
+</details>
+

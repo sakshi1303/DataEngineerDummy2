@@ -264,3 +264,35 @@ select * from user_details where end_dt >= '01-Jan-2020' and start_dt <='31-Jan-
 ```
 </details>
 
+## Worst case and Best case with joins 
+
+```sql
+DROP TABLE tb1;
+DROP TABLE tb2;
+CREATE TABLE TB1(
+pk NUMBER);
+
+CREATE TABLE TB2(
+pk NUMBER);
+
+insert into tb1 values(1);
+insert into tb1 values(1);
+insert into tb1 values(1);
+insert into tb1 values(2);
+insert into tb1 values(3);
+
+insert into tb2 values(1);
+insert into tb2 values(1);
+insert into tb2 values(3);
+insert into tb2 values(4);
+
+select * from tb1 inner join tb2 using(pk) ;
+select * from tb1 left outer join tb2 using(pk) ;
+select * from tb1 right outer join tb2 using(pk) ;
+select * from tb1 full outer join tb2 using(pk) ;
+select * from tb1 cross join tb2 ;
+```
+<details>
+<summary>Answer</summary>
+7, 8, 8, 9, 20
+</details>

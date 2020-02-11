@@ -308,3 +308,13 @@ select * from tb1 cross join tb2 ;
 find <Path_To_Old_Files> -type f -mtime +30 | xargs rm -f
 ```
 </details>
+
+## Incremental data load
+
+<details>
+<summary>Answer</summary>
+ 
+Use audit dimension or hash values to compare data.
+
+</details>
+

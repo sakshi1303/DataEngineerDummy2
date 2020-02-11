@@ -339,3 +339,14 @@ awk '{ if ( NR % 2 == 0 ) print $0 >> "even.txt" ;else print $0 >> "odd.txt" }' 
 ```
 
 </details>
+
+## Delete empty records in a file
+
+<details>
+<summary>Answer</summary>
+ 
+```bash
+sed '/^$/d' even.txt
+```
+
+</details>

@@ -327,3 +327,15 @@ range returns list and xrange returns generator objects.
 
 </details>
 
+## Use awk to divide the file between even and odd number of lines
+
+
+<details>
+<summary>Answer</summary>
+ 
+```bash
+awk '{ if ( NR % 2 == 0 ) print $0 >> "even.txt";if ( NR % 2 == 1 ) print $0 >> "odd.txt" }' traceexecution.py
+awk '{ if ( NR % 2 == 0 ) print $0 >> "even.txt" ;else print $0 >> "odd.txt" }' traceexecution.py
+```
+
+</details>

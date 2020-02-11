@@ -182,4 +182,60 @@ ssh user1@server1 timeout 5 date
 ```
 </details>
 
+## Consecutive winning streak
 
+```sql
+create table MATCH_RESULTS
+(
+MATCH_ID NUMBER GENERATED ALWAYS AS IDENTITY,
+TEAMA VARCHAR2(255),
+TEAMB VARCHAR2(255),
+WINNER VARCHAR2(255)
+);
+
+insert into MATCH_RESULTS (TEAMA, TEAMB, WINNER) VALUES('IND','WI','WI');
+insert into MATCH_RESULTS (TEAMA, TEAMB, WINNER) VALUES('SA','WI','WI');
+insert into MATCH_RESULTS (TEAMA, TEAMB, WINNER) VALUES('IND','AUS','IND');
+insert into MATCH_RESULTS (TEAMA, TEAMB, WINNER) VALUES('WI','ENG','WI');
+insert into MATCH_RESULTS (TEAMA, TEAMB, WINNER) VALUES('PAK','WI','PAK');
+insert into MATCH_RESULTS (TEAMA, TEAMB, WINNER) VALUES('IND','SA','IND');
+insert into MATCH_RESULTS (TEAMA, TEAMB, WINNER) VALUES('SA','ENG','ENG');
+insert into MATCH_RESULTS (TEAMA, TEAMB, WINNER) VALUES('ENG','AUS','AUS');
+insert into MATCH_RESULTS (TEAMA, TEAMB, WINNER) VALUES('AUS','PAK','AUS');
+insert into MATCH_RESULTS (TEAMA, TEAMB, WINNER) VALUES('PAK','WI','WI');
+insert into MATCH_RESULTS (TEAMA, TEAMB, WINNER) VALUES('WI','IND','IND');
+insert into MATCH_RESULTS (TEAMA, TEAMB, WINNER) VALUES('IND','ENG','IND');
+insert into MATCH_RESULTS (TEAMA, TEAMB, WINNER) VALUES('IND','PAK','IND');
+insert into MATCH_RESULTS (TEAMA, TEAMB, WINNER) VALUES('WI','AUS','WI');
+insert into MATCH_RESULTS (TEAMA, TEAMB, WINNER) VALUES('ENG','WI','WI');
+insert into MATCH_RESULTS (TEAMA, TEAMB, WINNER) VALUES('ENG','SA','ENG');
+insert into MATCH_RESULTS (TEAMA, TEAMB, WINNER) VALUES('ENG','IND','ENG');
+```
+
+<details>
+<summary>Answer</summary>
+  
+```sql
+select 
+team ,
+lag_winner,
+sum(case when winner <> team or winner <> lag_winner then 1 else 0 end) over(partition by team order by match_id rows unbounded preceding) cond ,
+match_id,
+winner 
+from (
+with teams as
+(select teama team from match_results mr1  
+union 
+select teamb team from match_results mr2 )
+select 
+team ,
+lag(mr.winner) over(partition by team order by match_id) lag_winner,
+--sum(case when mr.winner <> team  or mr.winner <> lag(mr.winner) over(partition by team order by match_id)  then 1 else 0 end) over(partition by team order by match_id rows unbounded preceding) cond ,
+match_id,
+mr.winner 
+from teams t cross join match_results mr 
+where t.team = mr.teama or t.team=mr.teamb 
+)
+order by 1,match_id;
+```
+</details>

@@ -1,6 +1,6 @@
 # Data Engineer Interview Questions
 
-[Sequence of numbers](##Sequence-of-numbers)
+[Sequence of numbers](##sequence-of-numbers)
 
 ## Distance between two cities
 

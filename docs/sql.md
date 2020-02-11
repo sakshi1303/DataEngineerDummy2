@@ -172,4 +172,11 @@ def heapsort(arr):
 ```
 </details>
 
+## Execute commands on all servers and return if timeout occurs
 
+<details>
+<summary>Answer</summary>
+```
+ssh user1@server1 timeout 5 date
+```
+</details>

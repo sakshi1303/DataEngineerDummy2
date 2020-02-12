@@ -25,7 +25,7 @@
 ## Index
 
 1. [HeapSort](heapsort.md)
-2. [SQL](sql.md)
+2. [Interview Questions](InterviewQuestions.md)
 3. [Quicksort](Quicksort.md)
 4. [BFS](breadthfirstsearch.md)
 5. [DFS](depthfirstsearch.md)

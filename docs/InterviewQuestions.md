@@ -385,3 +385,88 @@ select * from seats s1 where  s1.availability ='Y' and 'Y'= ALL(select s2.availa
 ```
 
 </details>
+
+## Create all combinations of teams from one table.
+
+```sql
+create table teams(
+team varchar2(10)
+);
+
+insert into teams values('IND');
+insert into teams values('SA');
+insert into teams values('ENG');
+insert into teams values('AUS');
+```
+<details>
+<summary>Answer</summary>
+ 
+```sql
+select t1.team, t2.team from teams t1 cross join teams t2 where t1.team <> t2.team and t1.team < t2.team ;
+```
+
+</details>
+
+## How to handle late arriving dimensions ?
+
+<details>
+<summary>Answer</summary>
+By extracting source system id and create other attributes as UNKNOWN and update it later.
+</details>
+
+## How to reload corrupt data as quickly as possible ?
+
+<details>
+<summary>Answer</summary>
+By using audit dimension and delete them .
+</details>
+
+## Frequently brought products in a table.
+
+```sql
+create table order_line
+(
+order_id number ,
+order_line_id number,
+product varchar2(1)
+);
+
+insert into order_line values(1, 1, 'A');
+insert into order_line values(1, 2, 'B');
+insert into order_line values(1, 3, 'C');
+insert into order_line values(1, 4, 'D');
+
+insert into order_line values(2, 1, 'B');
+insert into order_line values(2, 2, 'C');
+
+insert into order_line values(3, 1, 'D');
+insert into order_line values(3, 2, 'A');
+
+insert into order_line values(4, 1, 'B');
+insert into order_line values(4, 2, 'A');
+
+insert into order_line values(5, 1, 'C');
+insert into order_line values(5, 2, 'A');
+
+insert into order_line values(6, 1, 'C');
+insert into order_line values(6, 2, 'A');
+insert into order_line values(6, 3, 'B');
+
+insert into order_line values(7, 1, 'A');
+insert into order_line values(7, 2, 'C');
+insert into order_line values(7, 3, 'D');
+```
+<details>
+<summary>Answer</summary>
+  
+```sql
+select 
+case when ol1.product < ol2.product then ol1.product else ol2.product end prodA , 
+case when ol1.product < ol2.product then ol2.product else ol1.product end prodB,
+count(*)  from order_line ol1 inner join  order_line ol2 
+on ol1.order_id=ol2.order_id where ol1.order_line_id<ol2.order_line_id 
+group by 
+case when ol1.product < ol2.product then ol1.product else ol2.product end , 
+case when ol1.product < ol2.product then ol2.product else ol1.product end ;
+```
+</details>

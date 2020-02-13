@@ -470,3 +470,48 @@ case when ol1.product < ol2.product then ol1.product else ol2.product end ,
 case when ol1.product < ol2.product then ol2.product else ol1.product end ;
 ```
 </details>
+
+## Design a movie booking system
+
+<details>
+<summary>Answer</summary>
+  
+```
+Booking
+Movie|movie_name|Auditorium|Theatre|Language|seats|available|payment|customer|startime
+
+Movie
+Movie_id|name|language|2d/3d
+
+Movie_id|Auditorium|Theatre|Language|seats|available|payment|customer|startime
+
+Auditorium
+Auditorium_id|Theatre_id|seat_no
+
+Movie_id|Auditorium_id|seats|available|payment|customer|startime
+
+Screening
+Screening_id|Auditorium_id|Movie_id|start_time
+
+Screening_id|seats|available|payment|customer|
+
+Booking
+Booking_id|Screening_id|payment|customer|
+
+Booking_id|seats|available
+
+seat
+seat_id|seats|auditorium_id
+
+Booking_id|seat_id
+``` 
+
+```sql
+select * from 
+movie m 
+join Screening sc on m.movieid=sc.movieid
+join auditorium a on sc.Auditorium_id=a.Auditorium_id
+join seat se on se.auditorium_id=a.Auditorium_id
+
+```
+</details>

@@ -515,3 +515,24 @@ join seat se on se.auditorium_id=a.Auditorium_id
 
 ```
 </details>
+
+## Create a data model for IPL considering we have to calculate how many batsman have scored more than 15% runs as compared to last year.
+
+<details>
+<summary>Answer</summary>
+  
+```sql
+select 
+batsmen_id,
+year
+from(
+select 
+batsmen_id, 
+year, 
+(lag(sum_run) over(partition by batsmen_id, year) - sum_run)/sum_run *100 inc_pct
+(
+select sum(runs) sum_run , batsmen_id, year  from runs 
+group by batsmen_id, year )) where inc_pct > 15;
+
+```
+</details>

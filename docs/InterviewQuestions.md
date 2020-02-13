@@ -539,6 +539,9 @@ group by batsmen_id, year )) where inc_pct > 15;
 
 ## Check which department has more combined salary than 500000.
 
+<details>
+<summary>Answer</summary>
+  
 ```sql
 select d.department_id from 
 employees e 
@@ -547,6 +550,7 @@ on e.department_id=d.department_id
 group by d.department
 having sum(e.salary) > 500000;
 ```
+</details>
 
 ## Student class and schools.
 

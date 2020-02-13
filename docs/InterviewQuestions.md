@@ -554,10 +554,15 @@ having sum(e.salary) > 500000;
 
 ## Student class and schools.
 
+<details>
+<summary>Answer</summary>
 Preaggregate class and school attendance.
+</details>
 
 ## Role Playing Dimensions.
 
+<details>
+<summary>Answer</summary>
 One dimension which can be used in multiple ways just like Date dimension.
-
+</details>
 

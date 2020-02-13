@@ -536,3 +536,24 @@ group by batsmen_id, year )) where inc_pct > 15;
 
 ```
 </details>
+
+## Check which department has more combined salary than 500000.
+
+```sql
+select d.department_id from 
+employees e 
+join departments d 
+on e.department_id=d.department_id
+group by d.department
+having sum(e.salary) > 500000;
+```
+
+## Student class and schools.
+
+Preaggregate class and school attendance.
+
+## Role Playing Dimensions.
+
+One dimension which can be used in multiple ways just like Date dimension.
+
+

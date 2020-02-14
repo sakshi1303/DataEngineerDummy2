@@ -480,30 +480,12 @@ case when ol1.product < ol2.product then ol2.product else ol1.product end ;
 Booking
 Movie|movie_name|Auditorium|Theatre|Language|seats|available|payment|customer|startime
 
-Movie
-Movie_id|name|language|2d/3d
+Because of not filled seats it is better to separate them first or parent child relationship.
+Plus not filled dont come under above grain.
+Filled and not filled are also dependent on screening.
 
-Movie_id|Auditorium|Theatre|Language|seats|available|payment|customer|startime
 
-Auditorium
-Auditorium_id|Theatre_id|seat_no
 
-Movie_id|Auditorium_id|seats|available|payment|customer|startime
-
-Screening
-Screening_id|Auditorium_id|Movie_id|start_time
-
-Screening_id|seats|available|payment|customer|
-
-Booking
-Booking_id|Screening_id|payment|customer|
-
-Booking_id|seats|available
-
-seat
-seat_id|seats|auditorium_id
-
-Booking_id|seat_id
 ``` 
 
 ```sql

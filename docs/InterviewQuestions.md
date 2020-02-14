@@ -174,6 +174,36 @@ def heapsort(arr):
 ```
 </details>
 
+<details>
+<summary>Answer</summary>
+  
+```python
+def merge(arr,p,q,r):
+    n1=q-p+1
+    n2=r-q
+    L,R=[None]*(n1+1),[None]*(n2+1)
+    for i in range(0,n1):
+        L[i]=arr[p+i]
+    for j in range(0,n2):
+        R[j]=arr[q+j+1]
+    L[n1],R[n2]=math.inf,math.inf
+    i,j=0,0
+    for k in range(p,r+1):
+        if L[i] <= R[j]:
+            arr[k]=L[i]
+            i=i+1
+        else:
+            arr[k]=R[j]
+            j=j+1
+def merge_sort(A,p,r):
+    if p < r:
+        q=(p+r)//2
+        merge_sort(A,p,q)
+        merge_sort(A,q+1,r)
+        merge(A,p,q,r)  
+```
+</details>
+
 ## Execute commands on all servers and return if timeout occurs
 
 <details>

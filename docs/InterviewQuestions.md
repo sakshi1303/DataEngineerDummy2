@@ -605,3 +605,57 @@ One dimension which can be used in multiple ways just like Date dimension.
 select (next_day(trunc(sysdate+10),'MONDAY') - next_day(trunc(sysdate,'YYYY')- 7 , 'MONDAY'))/7 from dual;
 ```
 </details>
+
+## SQL for Merge SCD2 Type
+
+```sql
+
+create table stg_dim(
+natural_key varchar2(100),
+col1 varchar2(100),
+col2 varchar2(100));
+
+create table dim(
+dim_key number,
+natural_key varchar2(100),
+col1 varchar2(100),
+col2 varchar2(100),
+eff_dt date ,
+exp_dt date default to_date('99991231','YYYYMMDD') NOT NULL);
+
+drop table dim ;
+drop table stg_dim ;
+
+insert into stg_dim values ('ABC','a','b');
+insert into stg_dim values ('XYZ','g','r');
+insert into stg_dim values ('YUI','d','o');
+
+insert into dim values(1,'ABC','a','c',to_date('20190701','YYYYMMDD'),to_date('20190708','YYYYMMDD'));
+insert into dim values(2,'ABC','a','d',to_date('20190709','YYYYMMDD'),to_date('99991231','YYYYMMDD'));
+insert into dim values(3,'XYZ','g','s',to_date('20190706','YYYYMMDD'),to_date('99991231','YYYYMMDD'));
+
+```
+
+<details>
+<summary>Answer</summary>
+  
+```sql
+
+merge into dim
+using 
+(
+select s1.*, 'I' upd_ind  from stg_dim s1
+union all
+select s2.*, 'U' upd_ind  from stg_dim s2
+) stg
+on (stg.natural_key = dim.natural_key and dim.exp_dt=to_date('99991231','YYYYMMDD') and stg.upd_ind='U')
+when matched then 
+update set dim.col1=stg.col1, dim.col2=stg.col2
+when not matched then
+insert (dim.dim_key, dim.natural_key, dim.col1, dim.col2, dim.eff_dt, dim.exp_dt ) values(1,stg.natural_key,stg.col1,stg.col2,trunc(sysdate),to_date('99991231','YYYYMMDD'));
+
+select * from dim ;
+```
+
+</details>
+  

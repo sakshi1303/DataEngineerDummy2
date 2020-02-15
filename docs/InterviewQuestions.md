@@ -596,3 +596,12 @@ Preaggregate class and school attendance.
 One dimension which can be used in multiple ways just like Date dimension.
 </details>
 
+## Compare current week’s data to previous year’s  corresponding week’s data.
+
+<details>
+<summary>Answer</summary>
+  
+```sql
+select (next_day(trunc(sysdate+10),'MONDAY') - next_day(trunc(sysdate,'YYYY')- 7 , 'MONDAY'))/7 from dual;
+```
+</details>

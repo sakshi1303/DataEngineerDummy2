@@ -507,23 +507,41 @@ case when ol1.product < ol2.product then ol2.product else ol1.product end ;
 <summary>Answer</summary>
   
 ```
-Booking
-Movie|movie_name|Auditorium|Theatre|Language|seats|available|payment|customer|startime
+-- create table movie(
+-- movie_id number,
+-- movie_name varchar2(255),
+-- movie_language varchar2(100));
 
-Because of not filled seats it is better to separate them first or parent child relationship.
-Plus not filled dont come under above grain.
-Filled and not filled are also dependent on screening.
+create table auditorium(
+auditorium_id number,
+theatre_id number);
 
+create table theatre(
+theatre_id number,
+theatre_name varchar2(100));
 
+create table seats(
+seat_id number,
+row_number number,
+column_no varchar2(1),
+auditorium_id number);
 
-``` 
+create table screening(
+screening_id number,
+auditorium_id number,
+movie_id number,
+starttime date);
 
-```sql
-select * from 
-movie m 
-join Screening sc on m.movieid=sc.movieid
-join auditorium a on sc.Auditorium_id=a.Auditorium_id
-join seat se on se.auditorium_id=a.Auditorium_id
+create table reservation(
+reservation_id number,
+customer_id number,
+payment_type number 
+);
+
+create table seat_booking(
+seat_id number,
+screening_id number,
+reservation_id number);
 
 ```
 </details>

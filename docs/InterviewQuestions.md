@@ -506,11 +506,11 @@ case when ol1.product < ol2.product then ol2.product else ol1.product end ;
 <details>
 <summary>Answer</summary>
   
-```
--- create table movie(
--- movie_id number,
--- movie_name varchar2(255),
--- movie_language varchar2(100));
+```sql
+create table movie(
+movie_id number,
+movie_name varchar2(255),
+movie_language varchar2(100));
 
 create table auditorium(
 auditorium_id number,

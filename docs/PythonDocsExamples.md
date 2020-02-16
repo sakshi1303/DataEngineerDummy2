@@ -57,6 +57,36 @@ NameError: name 'x' is not defined
 "doesn't"
 >>> "doesn't"
 "doesn't"
+>>> '"Yes," they said.'
+'"Yes," they said.'
+>>> "\"Yes,\" they said."
+'"Yes," they said.'
+>>> '"Isn\'t, " they said.'
+'"Isn\'t, " they said.'
+>>> '"Isn\'t," they said.'
+'"Isn\'t," they said.'
+>>> print('"Isn\'t," they said.')
+"Isn't," they said.
+>>> s='First line. \nSecond line.'
+>>> s
+'First line. \nSecond line.'
+>>> print(s)
+First line. 
+Second line.
+>>> print('C:\some\name')
+C:\some
+ame
+>>> print(r'C:\some\name')
+C:\some\name
+>>> print("""\
+... Usage: thingy [OPTIONS]
+... -h
+... -H hostname
+... """)
+Usage: thingy [OPTIONS]
+-h
+-H hostname
+
 
 
 ```

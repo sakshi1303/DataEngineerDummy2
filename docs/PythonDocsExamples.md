@@ -135,6 +135,54 @@ Traceback (most recent call last):
 IndexError: string index out of range
 >>> word[4:42]
 'on'
+>>> word[0]
+'P'
+>>> word[0]='J'
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: 'str' object does not support item assignment
+>>> 'J' + word[1:]
+'Jython'
+>>> word[:2] + 'py'
+'Pypy'
+>>> s='super'
+>>> len(s)
+5
+>>> squares=[1,4,9,16,25]
+>>> squares
+[1, 4, 9, 16, 25]
+>>> squares[0]
+1
+>>> squares[-1]
+25
+>>> squares[:]
+[1, 4, 9, 16, 25]
+>>> squares[:2] + squares[2:]
+[1, 4, 9, 16, 25]
+>>> cubes=[1,8,27,65,125]
+>>> 4**3
+64
+>>> cubes[3]=64
+>>> cubes
+[1, 8, 27, 64, 125]
+>>> cubes.append(216)
+>>> cubes.append(7**3)
+>>> cubes
+[1, 8, 27, 64, 125, 216, 343]
+>>> letters=['a','b','c','d','e','f','g']
+>>> letters
+['a', 'b', 'c', 'd', 'e', 'f', 'g']
+>>> letters[2:5]=['C','D','E']
+>>> letters
+['a', 'b', 'C', 'D', 'E', 'f', 'g']
+>>> letters[2:5]
+['C', 'D', 'E']
+>>> letters[2:5]=[]
+>>> letters
+['a', 'b', 'f', 'g']
+>>> letters[:]=[]
+>>> letters
+[]
 
 
 

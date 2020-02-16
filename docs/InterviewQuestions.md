@@ -720,3 +720,38 @@ where customer_id= :customer_id ;
 
 ```
 </details>
+
+## Top five views per year
+
+<details>
+<summary>Answer</summary>
+
+```sql
+create table song_dim (
+song_id number,
+song_name varchar2(255));
+
+create table views_fact(
+song_id number,
+views number,
+eff_dt date)
+
+create table date_dim(
+eff_dt date,
+eff_year number
+);
+
+
+select song_id , eff_year , song_pop from(
+select song_id , eff_year , dense_rank() over(partition by song_id, eff_year order by song_pop desc) rnk, song_pop from(
+select 
+vf.song_id , dd.eff_year , count(vf.views) song_pop
+from views_fact vf
+join date_dim dd
+using(eff_dt)
+-- join song_dim sd
+-- using(song_id)
+group by vf.song_id , dd.eff_year)) where rnk >= 5;
+```
+
+</details>

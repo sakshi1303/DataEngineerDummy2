@@ -683,3 +683,40 @@ and ht.hotel_table_capacity = :capacity;
 ```
 
 </details>
+
+## Last 3 orders of a customer
+
+<details>
+<summary>Answer</summary>
+
+```sql
+create table orders(
+order_id number,
+customer_id number,
+order_date date,
+order_time timestamp(6),
+order_amount number);
+
+create table order_line(
+order_id number,
+order_line_id number,
+product_id number,
+delivery_address_id number);
+
+create table deliver_address(
+delivery_address_id number,
+address_line_1 varchar2(50),
+address_line_2 varchar2(50),
+address_line_3 varchar2(50),
+pin number,
+state varchar2(50));
+
+select * from 
+orders join
+order_line  using(order_id)
+join 
+deliver_address using(delivery_address_id)
+where customer_id= :customer_id ;
+
+```
+</details>

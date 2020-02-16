@@ -768,3 +768,23 @@ from t t1 where t1.song_pop >=ALL(select t2.song_pop from t t2 where t1.song_id=
 ```
 
 </details>
+
+## Pivot without using pivot function
+
+<details>
+<summary>Answer</summary>
+  
+```sql
+with t as (
+select 
+sum(case when d.deptno=30 then e.sal end) sum_30, 
+sum(case when d.deptno=10 then e.sal end) sum_10,
+sum(case when d.deptno=20 then e.sal end) sum_20
+from 
+scott.emp e join 
+scott.dept d 
+on e.deptno=d.deptno 
+group by d.deptno )
+select max(sum_30) sum_30, max(sum_10) sum_10, max(sum_20) sum_20 from t;
+```
+</details>

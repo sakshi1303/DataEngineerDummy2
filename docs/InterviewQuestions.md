@@ -752,6 +752,19 @@ using(eff_dt)
 -- join song_dim sd
 -- using(song_id)
 group by vf.song_id , dd.eff_year)) where rnk >= 5;
+
+with t as (
+select 
+vf.song_id , dd.eff_year , count(vf.views) song_pop
+from views_fact vf
+join date_dim dd
+using(eff_dt)
+-- join song_dim sd
+-- using(song_id)
+group by vf.song_id , dd.eff_year))
+select song_id , eff_year , song_pop 
+from t t1 where t1.song_pop >=ALL(select t2.song_pop from t t2 where t1.song_id=t2.song_id AND t2.eff_year between t1.eff_year -2 and t1.eff_year );
+
 ```
 
 </details>

@@ -651,18 +651,19 @@ insert into dim values(3,'XYZ','g','s',to_date('20190706','YYYYMMDD'),to_date('9
   
 ```sql
 
-merge into dim
-using 
-(
-select s1.*, 'I' upd_ind  from stg_dim s1
+merge into dim d using(
+select sd1.* , 'U' upd_ind , d1.dim_key from 
+stg_dim sd1
+left join 
+dim d1 on d1.natural_key=sd1.natural_key and d1.exp_dt=to_date('99991231','YYYYMMDD') 
 union all
-select s2.*, 'U' upd_ind  from stg_dim s2
-) stg
-on (stg.natural_key = dim.natural_key and dim.exp_dt=to_date('99991231','YYYYMMDD') and stg.upd_ind='U')
-when matched then 
-update set dim.col1=stg.col1, dim.col2=stg.col2
-when not matched then
-insert (dim.dim_key, dim.natural_key, dim.col1, dim.col2, dim.eff_dt, dim.exp_dt ) values(1,stg.natural_key,stg.col1,stg.col2,trunc(sysdate),to_date('99991231','YYYYMMDD'));
+select sd2.* ,'I' upd_ind , null dim_key from stg_dim sd2) s
+on (s.dim_key=d.dim_key )
+when matched  then
+update set d.exp_dt=sysdate - 1 where upd_ind='U'
+when not matched  then
+insert values ( 1,s.natural_key,s.col1,s.col2,trunc(sysdate),to_date('99991231','YYYYMMDD'))
+where upd_ind='I';
 
 select * from dim ;
 ```

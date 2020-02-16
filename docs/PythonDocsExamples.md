@@ -184,6 +184,40 @@ TypeError: 'str' object does not support item assignment
 >>> letters
 []
 
+>>> letters=['a','b','c','d']
+>>> len(letters)
+4
+>>> a=['a','b','c']
+>>> n=[1,2,3]
+>>> x=[a,n]
+>>> x
+[['a', 'b', 'c'], [1, 2, 3]]
+>>> x[0]
+['a', 'b', 'c']
+>>> x[0][1]
+'b'
+>>> # Fibonacci series
+... a,b = 0,1
+>>> while a<10:
+...     print(a)
+...     a,b = b,a+b
+... 
+0
+1
+1
+2
+3
+5
+8
+>>> i=256*256
+>>> print('The value of i is',i)
+The value of i is 65536
+>>> a,b = 0,1
+>>> while a < 1000:
+...     print(a,end=',')
+...     a,b = b,a+b
+... 
+0,1,1,2,3,5,8,13,21,34,55,89,144,233,377,610,987,>>> 
 
 
 ```

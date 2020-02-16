@@ -201,6 +201,16 @@ def merge_sort(A,p,r):
         merge_sort(A,p,q)
         merge_sort(A,q+1,r)
         merge(A,p,q,r)  
+        
+def median(arr):
+    heapsort(arr)
+    if len(arr) % 2 == 0:
+        n=len(arr)//2
+        return (arr[n]+arr[n-1])/2
+    else:
+        n=len(arr)//2
+        return arr[n]
+
 ```
 </details>
 

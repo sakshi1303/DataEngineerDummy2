@@ -87,6 +87,55 @@ Usage: thingy [OPTIONS]
 -h
 -H hostname
 
+>>> # 3 times
+... 3 * 'un' + 'ium'
+'unununium'
+>>> 'Py' 'thon'
+'Python'
+>>> text = ('Put severa' 'l stri' 'ngs')
+>>> text
+'Put several strings'
+>>> prefix='Py'
+>>> prefix 'thon'
+  File "<stdin>", line 1
+    prefix 'thon'
+                ^
+SyntaxError: invalid syntax
+>>> ('un' * 3) 'ium'
+  File "<stdin>", line 1
+    ('un' * 3) 'ium'
+                   ^
+SyntaxError: invalid syntax
+>>> prefix + 'thon'
+'Python'
+>>> word='Python'
+>>> word[0]
+'P'
+>>> word[5]
+'n'
+>>> word[-1]
+'n'
+>>> word[-2]
+'o'
+>>> word[-6]
+'P'
+>>> word[0:2]
+'Py'
+>>> word[2:5]
+'tho'
+>>> word[:2] + word[2:]
+'Python'
+>>> word[:2]
+'Py'
+>>> word[4:]
+'on'
+>>> word[42]
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+IndexError: string index out of range
+>>> word[4:42]
+'on'
+
 
 
 ```

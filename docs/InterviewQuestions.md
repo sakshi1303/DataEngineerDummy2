@@ -659,3 +659,27 @@ select * from dim ;
 
 </details>
   
+## Hotel reservation data model
+
+<details>
+<summary>Answer</summary>
+
+```sql
+create table hotel_tables(
+hotel_table_id number,
+hotel_table_capacity number);
+
+select * 
+from 
+hotel_tables 
+left outer join 
+booking 
+on ht.hotel_table_id=b.hotel_table_id
+and b.date=:date
+and b.time between :time-15 and :time+15
+where 
+b.hotel_table_id is null
+and ht.hotel_table_capacity = :capacity;
+```
+
+</details>

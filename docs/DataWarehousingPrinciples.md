@@ -25,4 +25,36 @@ They also contain foreign keys for shrunken dimensions.
 2. Dimension surrogate keys are created because for one natural key there will be more than one record as we keep track of history. Also since natural key can be created by more than one source system they may be poorly administered.
 3. Natural keys can be changed hence to identify a particular dimension DW/BI sytem can have their own durable key which never changes.
 4. Drilling down means adding more column in GROUP BY clause so that additional details are gained.
+5. Degenerate dimensions are used where multiple inline items are purchased with different invoice numbers and they have dont have their separate dimension table. 
+6. Denormalized dimension table by reducing number of tables and adding columns in dimension table for simplicity and speed. 
+7. Multiple hierarchies in same dimension table is similar to above point where instead of separate table we keep all attributes in same table. 
+8. Abbreviations with code values should be supplemented with full text words in dimension attributes. 
+9. Null values should be replaced with UNKNOWN or NA values to keep it independent of underlying database. 
+10. For calendar date dimensions keep it as YYYYMMDD , so that it can be partitioned and also all other functions such as to_Date should be avoided instead use filter in date dimensions . 
+11. One fact table may refer to same dimension table but with different logical dimensions such as date dimension but grouped by either week or month. This is called role playing dimension and each of them should have a separate column names to distinguish between them. 
+12. Transaction profile dimension or JUNK dimension are those table which contain attributes with low cardinality flags and store each combination in dimension . No need to store each possible combination , only those who have come up till now. 
+13. Snowflake dimensions create a multilevel structure due to normalization which can negatively impact query performance. 
+14. Outtrigger dimension such as country demograhic in a customer table can be allowed because it improves significant space. 
+15. Conformed dimension means columns in separate dimension table should have same name so that drilling across is easier. 
+16. Shrunken dimensions only contain a subset of rows and columns and are primarliy used with aggregated facts. 
+17. Drilling across simply means firing two seperate queries using fact table so that they can be merged with conformed dimensions. 
+18. Value chain can be identified with natural flow of an organization. 
+
+SCD Type 0:
+Keep original and dont change anything
+
+SCD Type 1:
+Overwrite or update original value. 
+
+SCD Type 2:
+This maintains history by creating 3 new columns such effective , expiration date and current indicator. 
+
+SCD Type 3:
+Add an additional column to store past history.
+
+SCD Type 4:
+Create a mini dimension if a group of attributes change rapidly and then they are split off to a mini dimension. Primary key from both dimensions are put into fact table. 
+
+SCD Type 5:
+
 

@@ -18,3 +18,11 @@
 9. Aggregated fact tables are rollups of numeric fact data so accelerate performance at UI level , also known as aggregate navigation. 
 They also contain foreign keys for shrunken dimensions.
 10. Consolidated facts are those to merge those facts with same grain. 
+
+## Basic Dimension table techniques
+
+1. Every dimension table has a unique primary key and contains descriptive columns in dimension table with its associated primary key in fact table as foreign key.
+2. Dimension surrogate keys are created because for one natural key there will be more than one record as we keep track of history. Also since natural key can be created by more than one source system they may be poorly administered.
+3. Natural keys can be changed hence to identify a particular dimension DW/BI sytem can have their own durable key which never changes.
+4. Drilling down means adding more column in GROUP BY clause so that additional details are gained.
+

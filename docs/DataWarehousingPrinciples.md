@@ -56,5 +56,5 @@ SCD Type 4:
 Create a mini dimension if a group of attributes change rapidly and then they are split off to a mini dimension. Primary key from both dimensions are put into fact table. 
 
 SCD Type 5:
-
+A separate view for current data in a dimension. 
 

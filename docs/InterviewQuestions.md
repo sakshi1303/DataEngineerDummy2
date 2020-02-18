@@ -143,6 +143,13 @@ select distinct product_id , price ,ranges , first_value(effective_Date) over(pa
 last_value(effective_Date) over(partition by ranges, product_id order by effective_Date rows between unbounded preceding and UNBOUNDED FOLLOWING ) end_dt from(
 select product_id , price , sum(case when price <> lag then 1 else 0 end)  over(partition by product_id order by effective_date) ranges , effective_Date from (
 select product_id , price , lag(price) over(partition by product_id order by effective_date) lag, effective_Date from price )) order by 3;
+
+select min(effective_date) begin_dt , max(effective_Date) end_dt , price , product_id  from(
+select 
+sum(case when lag_price <> price then 1 else 0 end) over(partition by product_id order by effective_Date ) rng , product_id , effective_Date, price
+from
+(select lag(price) over(partition by product_id order by effective_Date)  lag_price , price , effective_Date, product_id  from price ))
+group by price , product_id , rng;
 ```
 </details>
 
@@ -455,7 +462,7 @@ insert into teams values('AUS');
 <summary>Answer</summary>
  
 ```sql
-select t1.team, t2.team from teams t1 cross join teams t2 where t1.team <> t2.team and t1.team < t2.team ;
+select t1.team, t2.team from teams t1 cross join teams t2 where t1.team < t2.team ;
 ```
 
 </details>

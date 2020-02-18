@@ -195,12 +195,25 @@ def merge(arr,p,q,r):
         else:
             arr[k]=R[j]
             j=j+1
+In [25]: def merge(arr,p,q,r): 
+    ...:     L=arr[p:q+1] 
+    ...:     R=arr[q+1:r+1] 
+    ...:     L.append(math.inf) 
+    ...:     R.append(math.inf) 
+    ...:     i,j=0,0 
+    ...:     for k in range(p,r+1): 
+    ...:         if L[i] <= R[j]: 
+    ...:             arr[k]=L[i] 
+    ...:             i=i+1 
+    ...:         else: 
+    ...:             arr[k]=R[j] 
+    ...:             j=j+1 
 def merge_sort(A,p,r):
     if p < r:
         q=(p+r)//2
         merge_sort(A,p,q)
         merge_sort(A,q+1,r)
-        merge(A,p,q,r)  
+        merge(A,p,q,r)
         
 def median(arr):
     heapsort(arr)

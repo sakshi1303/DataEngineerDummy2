@@ -819,3 +819,19 @@ group by d.deptno )
 select max(sum_30) sum_30, max(sum_10) sum_10, max(sum_20) sum_20 from t;
 ```
 </details>
+
+## Apply lag function without using lag function
+
+Order_day| Processing_Day | Quantity| Order_id
+
+Processing_Day | Order_day | Order_id | change_in_quantity
+
+## Count how many employee id are under a manager table. 
+
+Empid | Manager_id
+
+## Total value for a seller on a day
+
+Seller_id  | Start_Date | end_Date | Seller_name 
+Order_id | Order_day | Seller_id | Price|Quantity
+

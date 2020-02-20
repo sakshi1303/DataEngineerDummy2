@@ -835,3 +835,26 @@ Empid | Manager_id
 Seller_id  | Start_Date | end_Date | Seller_name 
 Order_id | Order_day | Seller_id | Price|Quantity
 
+## Complex Problem 
+
+Situation
+
+1. Migrate legacy data warehouse to new data warehouse/data model of approx. 10 TB containing data from 2007 till present.
+2. Legacy datawarehouse had normalization and poor data model which created problem in developing and maintaining reports. 
+3. Migrating for 3 months in lower environments took 2 days , extrapolating gives (12/3)*(2019-2007)*2 = 96 days
+
+Task
+
+1. Reduce time for migration. 
+2. Keep CPU , RAM in check.
+
+Action
+
+1. Create partitions of 7 days.
+2. Use Python Multi-threading to process 7 days chunk in one thread. 
+3. Maintain 4-6 threads at a time to keep CPU , RAM in check. 
+4. Use CTAS in place of conventional INSERT.
+
+Result
+
+3 months data took only 5 mins ultimately on prod day it got completed in 240 mins or 6 hours hence saving almost 90 days of effort and consumption. 

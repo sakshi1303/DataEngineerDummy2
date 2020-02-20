@@ -858,3 +858,36 @@ Action
 Result
 
 3 months data took only 5 mins ultimately on prod day it got completed in 240 mins or 6 hours hence saving almost 90 days of effort and consumption. 
+
+## How Uber can enhance their app?
+
+1. Option to chat within the app with Customer support .
+2. Ability to select your driver.
+3. Analysis of Review via graph
+4. System through which destination of customer is shared with driver.
+
+## Uber system design 
+
+1. Supply and demand service
+
+2. Every car sends lat and long after every 5 secs.
+
+3. DISPATCH Optimization
+  a) Uber uses Google S2 which divides earth into small cells with unique cell id.
+  b) S2 can give a coverage of a shape for example a circle of radius 1 km etc.
+  c) Cell id is used as a sharding key to find data more quickly. 
+  d) As per sharding key, Uber calculates distance by road system and sort it for better supply.
+
+4. Scaling of dispatch system is done via Node.js with ringpop.
+
+5. Apache Kafka's API's are used to send geo data to datacentre.
+
+6. Historical time is used to calculate ETA's. 
+
+7. Use either AI or Djisktra Algorithm to calculate ETA's.
+
+8. Intersections are nodes and roads are edges.
+
+9. Djisktra's algorithm is impractical for millions of nodes so use Contraction hierarchies where shortcuts , highways and other inputs can be given for pre-processing. Roads changes rarely so this pre-processing even if it takes hours can be afforded. 
+
+10. Logging is done again via Kafka.

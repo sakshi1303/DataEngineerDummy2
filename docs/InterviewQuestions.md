@@ -903,3 +903,6 @@ Result
 4. Movie recommendations logging and all other things are done in AWS.
 
 5. 
+
+## Amazon SCOT
+

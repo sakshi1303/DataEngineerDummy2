@@ -891,3 +891,15 @@ Result
 9. Djisktra's algorithm is impractical for millions of nodes so use Contraction hierarchies where shortcuts , highways and other inputs can be given for pre-processing. Roads changes rarely so this pre-processing even if it takes hours can be afforded. 
 
 10. Logging is done again via Kafka.
+
+## Netflix system design 
+
+1. Other than serving video everything is handled by AWS. 
+
+2. Serving video is done by Open Connect ( A custom Content delivery Network).
+
+3. Files are transcoded for different speed and devices.
+
+4. Movie recommendations logging and all other things are done in AWS.
+
+5. 

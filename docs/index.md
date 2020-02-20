@@ -42,3 +42,4 @@
 16. [Python Tutorial8](PythonTutorial8.md)
 17. [Standard Python Library1](StandardPythonLibrary1.md)
 18. [Standard Python Library2](StandardPythonLibrary2.md)
+19. [DataWarehousing Principles](DataWarehousingPrinciples.md)

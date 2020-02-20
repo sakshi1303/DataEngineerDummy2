@@ -78,10 +78,34 @@ Same as SCD 5 but dimension is joined directly with FACT table.
 4. Accumulating snapshots should store just one lag between each step so rest of them can be calculated.
 5. In header/line or parent child all dimension foreign keys in header should be there in line as well.
 6. Allocated facts later
-7. Profit and los fact Tables using Allocations
+7. Profit and loss fact Tables using Allocations
 8. Multiple currency store one value in original currency and another in standard currency.
 9. Multiple units of measure.
 10. YTD should be handled at BI layer.
 11. Never join two fact tables instead fire two separate queries and sort merge them later.
-12. SCD  Type 2 in fact table.
-13. 
+12. SCD Type 2 in fact table.
+13. Late arriving facts if most current dimensional context does not match incoming row.
+
+## Advanced Dimension table techniques
+
+1. Dimension to dimension table joins should be avoided instead place foreign key in fact table.
+2. Multivalued Dimension and bridge tables for example a patient diagnosed with multiple ailments so we create a brdige for ailments.
+3. We can also apply SCD 2 in multivalued dimension.
+4. Behaviour tag time series
+5. Behaviour study groups
+6. Aggregated facts as dimension attributes such as filtering on all customers who spent over a certain amount.
+7. Dynamic Value bands is putting varying size range in a dimension.
+8. Comments should be stored in dimensions rather than fact table. 
+9. Multiple time zones should be stored in fact table.
+10. Measure type dimensions
+11. Step dimension is used at determine current step and how many steps are left.
+12. Hot swappable dimensions.
+13. Abstract generic dimension should be avoided in dimensional modeling.
+14. Audit dimensions are metadata columns like insert/update time.
+15. Late arriving dimensions means dimensional context has not arrived and these dimension row's has attributes that are specified as UNKNOWN. SCD Type 1 changes are done when dimensional context arrives.
+
+## Special Purpose Schemas
+
+1. In case of heterogenoeous products , build a supertype and subtype fact table.
+2. Real time fact tables
+3. Error event schemas where each error is the grain.

@@ -64,5 +64,11 @@ Keep SCD type 2 but keep another column for current data like scd 3.
 SCD Type 7:
 Same as SCD 5 but dimension is joined directly with FACT table.
 
+## Dealing with Positional Hierarchies
 
+1. Fixed Depth Positional Hierarchies :- Use additional attributes in dimension table for positional hierarchies. 
+2. Slightly Ragged/Variable Depth Hierarchies :- Introduce a few more attributes to make it fixed depth. 
+3. Ragged Depth Hierarchies :- Use of bridge table for all nodes . Sometimes pathstring can be used with overhead of updating all values as well.
+
+## Advanced Fact table techniques
 

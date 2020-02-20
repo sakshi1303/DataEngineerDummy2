@@ -72,3 +72,16 @@ Same as SCD 5 but dimension is joined directly with FACT table.
 
 ## Advanced Fact table techniques
 
+1. Fact table surrogate keys could be useful but not mandatory.
+2. Centipede fact tables result when low cardinal foreign keys are used in fact tables instead of junk dimension.
+3. If numeric values are aggregated then use them in fact if they are to be filtered then use them in dimensions.
+4. Accumulating snapshots should store just one lag between each step so rest of them can be calculated.
+5. In header/line or parent child all dimension foreign keys in header should be there in line as well.
+6. Allocated facts later
+7. Profit and los fact Tables using Allocations
+8. Multiple currency store one value in original currency and another in standard currency.
+9. Multiple units of measure.
+10. YTD should be handled at BI layer.
+11. Never join two fact tables instead fire two separate queries and sort merge them later.
+12. SCD  Type 2 in fact table.
+13. 

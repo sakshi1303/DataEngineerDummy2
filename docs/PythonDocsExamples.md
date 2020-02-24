@@ -1,5 +1,12 @@
 # Python Examples from Documentation
 
+## Whetting your Appetite
+
+```python
+```
+
+## Using the Python Interpreter
+
 ```python
 >>> flat=True
 >>> if flat:
@@ -10,6 +17,11 @@ Hi
 >>> # this is comment
 ... spam=1
 >>> 
+```
+
+## An Informal Introduction to Python
+
+```python
 
 >>> 2 + 2
 4

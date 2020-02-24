@@ -2,10 +2,17 @@
 
 ## Whetting your Appetite
 
+<details>
+<summary>Code samples</summary>
+
 ```python
 ```
+</details>
 
 ## Using the Python Interpreter
+
+<details>
+<summary>Code samples</summary>
 
 ```python
 >>> flat=True
@@ -18,8 +25,12 @@ Hi
 ... spam=1
 >>> 
 ```
+</details>
 
 ## An Informal Introduction to Python
+
+<details>
+<summary>Code samples</summary>
 
 ```python
 
@@ -233,8 +244,12 @@ The value of i is 65536
 >>> 
 
 ```
+</details>
 
 ## More Control Flow Tools
+
+<details>
+<summary>Code samples</summary>
 
 ```python
 
@@ -356,3 +371,4 @@ Found a number 9
 
 
 ```
+</details>

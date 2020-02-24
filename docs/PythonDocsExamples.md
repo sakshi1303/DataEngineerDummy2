@@ -233,3 +233,62 @@ The value of i is 65536
 >>> 
 
 ```
+
+## More Control Flow Tools
+
+```python
+
+In [1]: x=int(input("Please enter an integer: "))                               
+Please enter an integer: 56
+
+In [2]: if x < 0: 
+   ...:     x = 0 
+   ...:     print('Negative changed to zero') 
+   ...: elif x == 0: 
+   ...:     print('Zero') 
+   ...: elif x == 1: 
+   ...:     print('Single') 
+   ...: else: 
+   ...:     print('More') 
+   ...:                                                                         
+More
+
+In [3]: words = ['cat','window','defenestrate']                                 
+
+In [4]: for w in words: 
+   ...:     print(w,len(w)) 
+   ...:                                                                         
+cat 3
+window 6
+defenestrate 12
+
+In [6]: users = {'a':'active','b':'inactive'}                                   
+
+In [7]: for user, status in users.copy().items(): 
+   ...:     if status == 'inactive': 
+   ...:         del users[user] 
+   ...:                                                                         
+
+In [8]: users                                                                   
+Out[8]: {'a': 'active'}
+
+In [8]: users                                                                   
+Out[8]: {'a': 'active'}
+
+In [9]: users = {'a':'active','b':'inactive'}                                   
+
+In [10]: active_users={}                                                        
+
+In [11]: for user, status in users.items(): 
+    ...:     if status == 'active': 
+    ...:         active_users[user] = status 
+    ...:                                                                        
+
+In [12]: users                                                                  
+Out[12]: {'a': 'active', 'b': 'inactive'}
+
+In [13]: active_users                                                           
+Out[13]: {'a': 'active'}
+
+
+```

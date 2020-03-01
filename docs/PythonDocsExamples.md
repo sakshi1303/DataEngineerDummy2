@@ -369,6 +369,189 @@ Found a number 7
 Found an even number 8
 Found a number 9
 
+In [1]: while True: 
+   ...:     pass 
+   ...:                                                                         
+^C---------------------------------------------------------------------------
+KeyboardInterrupt                         Traceback (most recent call last)
+<ipython-input-1-414c137564b4> in <module>
+      1 while True:
+----> 2     pass
+      3 
+
+KeyboardInterrupt: 
+
+In [2]: class MyEmptyClass: 
+   ...:     pass 
+   ...:                                                                         
+
+In [3]: def initlog(*args): 
+   ...:     pass 
+   ...:                                                                         
+
+In [4]: def fib(n): 
+   ...:     a, b=0,1 
+   ...:     while a < n: 
+   ...:         print(a, end=' ') 
+   ...:         a, b = b, a+b 
+   ...:         print() 
+   ...:                                                                         
+
+In [5]: fib(2000)                                                               
+0 
+1 
+1 
+2 
+3 
+5 
+8 
+13 
+21 
+34 
+55 
+89 
+144 
+233 
+377 
+610 
+987 
+1597 
+
+In [6]: fib                                                                     
+Out[6]: <function __main__.fib(n)>
+
+In [7]: f = fib                                                                 
+
+In [8]: f(100)                                                                  
+0 
+1 
+1 
+2 
+3 
+5 
+8 
+13 
+21 
+34 
+55 
+89 
+
+In [11]: fib(0) ## None is suppressed                                           
+
+In [12]: print(fib(0))                                                          
+None
+
+In [13]: def fib2(n): 
+    ...:     result = [] 
+    ...:     a, b = 0,1 
+    ...:     while a < n: 
+    ...:         result.append(a) 
+    ...:         a, b = b, a+b 
+    ...:     return result 
+    ...:                                                                        
+
+In [14]: f100=fib2(100)                                                         
+
+In [15]: f100                                                                   
+Out[15]: [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89]
+
+In [16]: def ask_ok(prompt, retries=4, reminder='Please try again'): 
+    ...:     while True: 
+    ...:         ok=input(prompt) 
+    ...:         if ok in ('y','ye', 'yes'): 
+    ...:             return True 
+    ...:         if ok in ('n', 'no', 'nop', 'nope'): 
+    ...:             return False 
+    ...:         retries = retries - 1 
+    ...:         if retries < 0: 
+    ...:             raise ValueError('invalid user response') 
+    ...:         print(reminder) 
+    ...:                                                                        
+
+In [17]: ask_ok('Do you want to quit')                                          
+Do you want to quity
+Out[17]: True
+
+In [18]: i = 5                                                                  
+
+In [19]: def f(arg=i): 
+    ...:     print(arg) 
+    ...:                                                                        
+
+In [20]: i=6                                                                    
+
+In [21]: f()                                                                    
+5
+
+In [22]: def f(a, L=[]): 
+    ...:     L.append(a) 
+    ...:     return L 
+    ...:                                                                        
+
+In [23]: print(f(1))                                                            
+[1]
+
+In [24]: print(f(2))                                                            
+[1, 2]
+
+In [25]: print(f(3))                                                            
+[1, 2, 3]
+
+In [26]: def f(a, L=None): 
+    ...:     if L is None: 
+    ...:         L= [] 
+    ...:     L.append(a) 
+    ...:     return L 
+    ...:                                                                        
+
+In [27]: print(f(1))                                                            
+[1]
+
+In [28]: print(f(2))                                                            
+[2]
+
+In [29]: print(f(3))                                                            
+[3]
+
+In [30]: def parrot(voltage, state='a stiff', action='voom', type='Norwegian Blu
+    ...: e'): 
+    ...:     print("--This parrot wouldn't", action, end=' ') 
+    ...:     print("If you put", voltage, "volts through it.") 
+    ...:     print("--Lovely plumage, the",type) 
+    ...:     print("--It's",state, "!") 
+    ...:    
+    
+In [31]: parrot(1000)                                                          
+--This parrot wouldn't voom If you put 1000 volts through it.
+--Lovely plumage, the Norwegian Blue
+--It's a stiff !
+
+In [31]: parrot(1000)                                                          
+--This parrot wouldn't voom If you put 1000 volts through it.
+--Lovely plumage, the Norwegian Blue
+--It's a stiff !
+
+In [32]: parrot(voltage=1000)                                                                                          
+--This parrot wouldn't voom If you put 1000 volts through it.
+--Lovely plumage, the Norwegian Blue
+--It's a stiff !
+
+In [33]: parrot(voltage=100000,action='VOOOOOM')                                                                       
+--This parrot wouldn't VOOOOOM If you put 100000 volts through it.
+--Lovely plumage, the Norwegian Blue
+--It's a stiff !
+
+In [34]: parrot('a million','bereft of life', 'jump')                                                                  
+--This parrot wouldn't jump If you put a million volts through it.
+--Lovely plumage, the Norwegian Blue
+--It's bereft of life !
+
+In [35]: parrot('a thousand',state='pushing up the daisies')                                                           
+--This parrot wouldn't voom If you put a thousand volts through it.
+--Lovely plumage, the Norwegian Blue
+--It's pushing up the daisies !
+
+
 
 ```
 </details>

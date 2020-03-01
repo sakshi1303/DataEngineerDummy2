@@ -902,7 +902,36 @@ Result
 
 4. Movie recommendations logging and all other things are done in AWS.
 
-5. 
+## Movie Reviewer Data Model
 
-## Amazon SCOT
+Movie, Reviewer, Rating
+
+### Those who reviewed movie better than first time.(with and without analytical functions)
+### Create a report with reviewername|2017|2018|2019
+### Reviewer name whose have not given rating date.
+
+## Print dept and emp with max salary(analytical fns , group by IN clause, joins)
+
+## Find batsman who scored 3 consecutive dots. 
+
+Innid|Overid|Ball_num|Batsman|Bowler|Runs_scored|Is_wide|Is_noball|Is_freehit
+
+## Find minimum number of changes in a string to convert it into Pallindrome.
+
+## Find files which has been updated in last hour.
+
+## Find all files in a directory with last name as .pyc (in python and UNIX)
+
+## Ticket table , Audit Table Id
+TID|Impact|CreateTime|
+AID|TID|CreateTime|Team
+
+Tickets count Group per week basis on Team, Impact
+
+## Backfill data like files missing on 12th process date after 10 days. 
+
+## Explain when you disagree with someone.
+
+## Explain when you helped someone. 
+
 

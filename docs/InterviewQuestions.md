@@ -824,6 +824,21 @@ select max(sum_30) sum_30, max(sum_10) sum_10, max(sum_20) sum_20 from t;
 
 Order_day| Processing_Day | Quantity| Order_id
 
+```sql
+create table 
+orders (
+Order_day date ,  Processing_Day date ,  Quantity NUMBER , Order_id NUMBER);
+
+insert into orders values('12-FEB-2020','13-FEB-2020', 2, 1); 
+insert into orders values('12-FEB-2020','15-FEB-2020', 4, 1);
+insert into orders values('12-FEB-2020','16-FEB-2020', 5, 1);
+insert into orders values('12-FEB-2020','18-FEB-2020', 3, 1);
+insert into orders values('11-FEB-2020','19-FEB-2020', 2, 3);
+insert into orders values('11-FEB-2020','22-FEB-2020', 10, 3);
+insert into orders values('11-FEB-2020','21-FEB-2020', 8, 3);
+insert into orders values('11-FEB-2020','27-FEB-2020', 17, 3);
+```
+
 Processing_Day | Order_day | Order_id | change_in_quantity
 
 ## Count how many employee id are under a manager table. 

@@ -551,6 +551,221 @@ In [35]: parrot('a thousand',state='pushing up the daisies')
 --Lovely plumage, the Norwegian Blue
 --It's pushing up the daisies !
 
+In [2]: parrot()                                                                
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+<ipython-input-2-1fa32faf15ff> in <module>
+----> 1 parrot()
+
+TypeError: parrot() missing 1 required positional argument: 'voltage'
+
+In [3]: parrot(voltage=5.0,'dead')                                              
+  File "<ipython-input-3-0e2a2e945ec5>", line 1
+    parrot(voltage=5.0,'dead')
+                      ^
+SyntaxError: positional argument follows keyword argument
+
+
+In [4]: parrot(110, voltage=220)                                                       
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+<ipython-input-4-c1313626062d> in <module>
+----> 1 parrot(110, voltage=220)
+
+TypeError: parrot() got multiple values for argument 'voltage'
+
+In [5]: parrot(actor='John Cleese')                                                    
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+<ipython-input-5-65e0c6ab2f7f> in <module>
+----> 1 parrot(actor='John Cleese')
+
+TypeError: parrot() got an unexpected keyword argument 'actor'
+
+
+In [6]: def function(a): 
+   ...:     pass 
+   ...:                                                                                
+
+In [7]: function(0,a=0 
+   ...: )                                                                              
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+<ipython-input-7-ace1a42cd44e> in <module>
+----> 1 function(0,a=0
+      2 )
+
+TypeError: function() got multiple values for argument 'a'
+
+In [8]: def cheeseshop(kind, *arguments, **keywords): 
+   ...:     print("--Do you have any", kind, "?") 
+   ...:     print("-- I'm sorry, we're all out of ", kind) 
+   ...:     for arg in arguments: 
+   ...:         print(arg) 
+   ...:     print("-" * 40) 
+   ...:     for kw in keywords: 
+   ...:         print(kw, ":", keywords[kw]) 
+   ...:                                                                                
+
+In [9]: cheeseshop("Limburger", "It's very runny sir.",shopkeeper="Michael Palin")     
+--Do you have any Limburger ?
+-- I'm sorry, we're all out of  Limburger
+It's very runny sir.
+----------------------------------------
+shopkeeper : Michael Palin
+
+
+In [11]: def standard_arg(arg): 
+    ...:     print(arg) 
+    ...:                                                                               
+
+In [12]: def pos_only_arg(arg, /): 
+    ...:     print(arg)                                                                
+  File "<ipython-input-12-dac7287a6fee>", line 1
+    def pos_only_arg(arg, /):
+                          ^
+SyntaxError: invalid syntax
+
+
+In [13]:                                                                               
+
+In [13]: def pos_only_arg(arg, //): 
+    ...:     print(arg)                                                                
+  File "<ipython-input-13-11cfb5bd9ea4>", line 1
+    def pos_only_arg(arg, //):
+                           ^
+SyntaxError: invalid syntax
+
+
+In [14]: def kwd_only_arg(*, arg): 
+    ...:     print(arg) 
+    ...:                                                                               
+
+In [15]: def combined_example(pos_only, /, standard, *, kwd_only): 
+    ...:     print(pos_only, standard, kwd_only)                                       
+  File "<ipython-input-15-e71a7fd473ab>", line 1
+    def combined_example(pos_only, /, standard, *, kwd_only):
+                                   ^
+SyntaxError: invalid syntax
+
+In [17]: standard_arg(2)                                                               
+2
+
+In [18]: standard_arg(arg=2)                                                           
+2
+
+In [19]: pos_only_arg(1)                                                               
+---------------------------------------------------------------------------
+NameError                                 Traceback (most recent call last)
+<ipython-input-19-bbb555849e09> in <module>
+----> 1 pos_only_arg(1)
+
+NameError: name 'pos_only_arg' is not defined
+
+In [20]: kwd_only_arg(1)                                                               
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+<ipython-input-20-e6e9a1a2a268> in <module>
+----> 1 kwd_only_arg(1)
+
+TypeError: kwd_only_arg() takes 0 positional arguments but 1 was given
+
+In [21]: def foo(name, **kwds): 
+    ...:     return 'name' in kwds 
+    ...:                                                                               
+
+In [22]: foo(1, **{'name':2})                                                          
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+<ipython-input-22-4973700be595> in <module>
+----> 1 foo(1, **{'name':2})
+
+TypeError: foo() got multiple values for argument 'name'
+
+In [23]: def foo(name, / , **kwds): 
+    ...:     return 'name' in kwds                                                     
+  File "<ipython-input-23-c68083edc5e1>", line 1
+    def foo(name, / , **kwds):
+                  ^
+SyntaxError: invalid syntax
+
+In [24]: def write_multiple_items(file, separator, *args): 
+    ...:     file.write(separator.join(args)) 
+    ...:                                                                               
+
+In [25]: def concat(*args, sep="/"): 
+    ...:     return sep.join(args) 
+    ...:      
+    ...:                                                                               
+
+In [26]: concat("earth","mars", "venus")                                               
+Out[26]: 'earth/mars/venus'
+
+In [28]: concat("earth","mars", "venus",sep=",")                                       
+Out[28]: 'earth,mars,venus'
+
+In [30]: list(range(7,10))                                                             
+Out[30]: [7, 8, 9]
+
+In [31]: args=[3,6]                                                                    
+
+In [32]: list(range(*args))                                                            
+Out[32]: [3, 4, 5]
+
+In [33]: def parrot(voltage, state='a stiff', action='voom'): 
+    ...:     print(voltage,state,action) 
+
+In [36]: d={"voltage":"1","state":"2","action":"3"}                                    
+
+In [37]: parrot(**d)                                                                   
+1 2 3
+
+In [39]: def make_incrementor(n): 
+    ...:     return lambda x:x + n  
+    ...:                                                                               
+
+In [40]: f = make_incrementor(42)                                                      
+
+In [41]: f(0)                                                                          
+Out[41]: 42
+
+In [42]: f(1)                                                                          
+Out[42]: 43
+
+In [43]: f(2)                                                                          
+Out[43]: 44
+
+In [44]: pairs = [(1,'one'),(2,'two'),(3, 'three')]                                    
+
+In [45]: pairs.sort(key=lambda pair: pair[1])                                          
+
+In [46]: pairs                                                                         
+Out[46]: [(1, 'one'), (3, 'three'), (2, 'two')]
+
+In [47]: pairs.sort(key=lambda pair: pair[0])                                          
+
+In [48]: pairs                                                                         
+Out[48]: [(1, 'one'), (2, 'two'), (3, 'three')]
+
+In [49]: def my_function(): 
+    ...:     """Do nothing, but document it.  
+    ...:     No really""" 
+    ...:     pass 
+    ...:                                                                               
+
+In [50]: print(my_function.__doc__)                                                    
+Do nothing, but document it. 
+    No really
+
+In [53]: def f (val : str)-> str: 
+    ...:     print(f.__annotations__) 
+    ...:     return val 
+    ...:      
+    ...:                                                                               
+
+In [54]: f('spam')                                                                     
+{'val': <class 'str'>, 'return': <class 'str'>}
+Out[54]: 'spam'
 
 
 ```

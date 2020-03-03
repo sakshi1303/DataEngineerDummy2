@@ -841,6 +841,18 @@ insert into orders values('11-FEB-2020','27-FEB-2020', 17, 3);
 
 Processing_Day | Order_day | Order_id | change_in_quantity
 
+```sql
+select 
+* 
+from
+orders o1 
+left outer join 
+orders o2 
+on o1.order_day=o2.order_Day and o1.order_id=o2.order_id
+and o2.processing_day = (select max(o3.processing_Day) from  orders o3 where o1.order_day=o3.order_day and o1.order_id=o3.order_id and o3.processing_day < o1.processing_Day); 
+
+```
+
 ## Count how many employee id are under a manager table. 
 
 Empid | Manager_id

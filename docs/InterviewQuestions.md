@@ -857,6 +857,14 @@ and o2.processing_day = (select max(o3.processing_Day) from  orders o3 where o1.
 
 Empid | Manager_id
 
+```sql
+select e1.ename  from scott.emp e1 
+left outer join 
+(select e.mgr emp from scott.emp e group by mgr having count(*) > 3) e2
+on e1.empno=e2.emp;
+
+```
+
 ## Total value for a seller on a day
 
 Seller_id  | Start_Date | end_Date | Seller_name 

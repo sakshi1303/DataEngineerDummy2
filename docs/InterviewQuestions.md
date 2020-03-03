@@ -841,6 +841,9 @@ insert into orders values('11-FEB-2020','27-FEB-2020', 17, 3);
 
 Processing_Day | Order_day | Order_id | change_in_quantity
 
+<details>
+<summary>Answer</summary>
+
 ```sql
 select 
 * 
@@ -852,10 +855,14 @@ on o1.order_day=o2.order_Day and o1.order_id=o2.order_id
 and o2.processing_day = (select max(o3.processing_Day) from  orders o3 where o1.order_day=o3.order_day and o1.order_id=o3.order_id and o3.processing_day < o1.processing_Day); 
 
 ```
+</details>
 
 ## Count how many employee id are under a manager table. 
 
 Empid | Manager_id
+
+<details>
+<summary>Answer</summary>
 
 ```sql
 select e1.ename  from scott.emp e1 
@@ -864,11 +871,30 @@ left outer join
 on e1.empno=e2.emp;
 
 ```
+</details>
 
 ## Total value for a seller on a day
 
-Seller_id  | Start_Date | end_Date | Seller_name 
+| Seller_id  | Start_Date | end_Date | Seller_name |
 Order_id | Order_day | Seller_id | Price|Quantity
+
+<details>
+<summary>Answer</summary>
+
+```sql
+
+select 
+s.seller_id , sum(price*quantity) 
+from 
+seller s 
+left outer join 
+order o
+on s.seller_id=o.seller_id and o.order_day between s.start_Date and s.end_Date
+group by s.seller_id ;
+
+```
+
+</details>
 
 ## Complex Problem 
 

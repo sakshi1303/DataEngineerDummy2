@@ -770,3 +770,111 @@ Out[54]: 'spam'
 
 ```
 </details>
+
+## Data Structures
+
+<details>
+<summary>Code Sample</summary>
+  
+```python
+In [1]: fruits=['orange','apple','pear','banana','kiwi','apple','banana']       
+
+In [2]: fruits.count('apple')                                                   
+Out[2]: 2
+
+In [3]: fruits.index('banana')                                                  
+Out[3]: 3
+
+In [4]: fruits.index('banana',4)                                                
+Out[4]: 6
+
+In [5]: fruits.reverse()                                                        
+
+In [6]: fruits                                                                  
+Out[6]: ['banana', 'apple', 'kiwi', 'banana', 'pear', 'apple', 'orange']
+
+In [7]: fruits.append('grape')                                                  
+
+In [8]: fruits                                                                  
+Out[8]: ['banana', 'apple', 'kiwi', 'banana', 'pear', 'apple', 'orange', 'grape']
+
+In [9]: fruits.sort()                                                                        
+
+In [10]: fruits                                                                              
+Out[10]: ['apple', 'apple', 'banana', 'banana', 'grape', 'kiwi', 'orange', 'pear']
+
+In [11]: fruits.pop()                                                                        
+Out[11]: 'pear'
+
+```
+
+### Using Lists as Stacks
+
+```python
+In [13]: stack=[3,4,5]                                                                       
+
+In [14]: stack.append(6)                                                                     
+
+In [15]: stack.append(7)                                                                     
+
+In [16]: stack                                                                               
+Out[16]: [3, 4, 5, 6, 7]
+
+In [17]: stack.pop()                                                                         
+Out[17]: 7
+
+In [18]: stack.pop()                                                                         
+Out[18]: 6
+
+In [19]: stack                                                                               
+Out[19]: [3, 4, 5]
+
+```
+
+### Using Lists as Queues
+
+```python
+In [21]: from collections import deque                                                       
+
+In [22]: queue = deque(["Eric", "John", "Michael"])                                          
+
+In [23]: queue.append("Terry")                                                               
+
+In [24]: queue.append("Graham")                                                              
+
+In [25]: queue.popleft()                                                                     
+Out[25]: 'Eric'
+
+In [26]: queue.popleft()                                                                     
+Out[26]: 'John'
+
+In [27]: queue                                                                               
+Out[27]: deque(['Michael', 'Terry', 'Graham'])
+
+```
+
+### List Comprehensions
+
+```python
+In [29]: squares=[]                                                                          
+
+In [30]: for x in range(10): 
+    ...:     squares.append(x**2) 
+    ...:                                                                                     
+
+In [31]: squares                                                                             
+Out[31]: [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+
+In [32]: squares=[]                                                                          
+
+In [33]: squares=list(map(lambda x:x**2, range(10)))                                         
+
+In [34]: squares = [ x ** 2 for x in range(10)]                                              
+
+In [35]: squares                                                                             
+Out[35]: [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+
+```
+
+  
+</details>

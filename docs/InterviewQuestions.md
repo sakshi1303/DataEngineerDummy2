@@ -987,10 +987,38 @@ rating_date date,
 ratings number
 );
 
+insert into movie values (1,'A');
+insert into movie values (2,'B');
+insert into movie values (3,'C');
+insert into movie values (4,'D');
+insert into movie values (5,'E');
+
+insert into reviewer values (1,'aa');
+insert into reviewer values (2,'bb');
+insert into reviewer values (3,'cc');
+insert into reviewer values (4,'dd');
+insert into reviewer values (5,'ee');
+insert into reviewer values (6,'ff');
+
+insert into rating values(1,1,2,to_date('20170201','YYYYMMDD'),3.1);
+insert into rating values(2,4,4,to_date('20180301','YYYYMMDD'),4.2);
+insert into rating values(3,1,5,to_date('20190401','YYYYMMDD'),5);
+insert into rating values(4,3,1,to_date('20170501','YYYYMMDD'),3.3);
+insert into rating values(5,6,3,to_date('20180601','YYYYMMDD'),4.4);
+insert into rating values(6,2,2,to_date('20190701','YYYYMMDD'),5);
+insert into rating values(7,5,1,to_date('20200801','YYYYMMDD'),3.6);
+insert into rating values(8,2,3,to_date('20170901','YYYYMMDD'),4.5);
+insert into rating values(9,1,4,to_date('20181001','YYYYMMDD'),5);
+insert into rating values(10,5,1,to_date('20170201','YYYYMMDD'),3.7);
+insert into rating values(11,2,5,to_date('20170201','YYYYMMDD'),4.5);
+insert into rating values(12,3,6,to_date('20170201','YYYYMMDD'),3.5);
+insert into rating values(13,2,3,to_date('20180201','YYYYMMDD'),4.7);
+insert into rating values(14,1,4,to_date('20180301','YYYYMMDD'),4);
+insert into rating values(15,5,1,to_date('20180401','YYYYMMDD'),3.8);
+insert into rating values(16,2,5,to_date('20180501','YYYYMMDD'),3.9);
+insert into rating values(17,3,6,to_date('20180601','YYYYMMDD'),4.5);
 
 ```
-
-
 
 ### Those who reviewed movie better than first time.(with and without analytical functions)
 
@@ -998,10 +1026,15 @@ ratings number
 
 ```sql
 
+select re.reviewer_name from (
 select 
-* 
-from 
-rating ra  
+reviewer_id , 
+ratings,
+lag(ratings) over(partition by movie_id, reviewer_id order by rating_date ) lag_rating
+from rating 
+) r 
+left outer join reviewer re on  r.reviewer_id=re.reviewer_id
+where ratings > lag_rating ;
 
 ```
 

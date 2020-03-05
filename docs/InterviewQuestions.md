@@ -967,7 +967,23 @@ Result
 
 Movie, Reviewer, Rating
 
+Movie_Id | Movie_Name 
+
+Reviewer
+
+
+
 ### Those who reviewed movie better than first time.(with and without analytical functions)
+
+```sql
+
+select 
+* 
+from 
+rating ra  
+
+```
+
 ### Create a report with reviewername|2017|2018|2019
 ### Reviewer name whose have not given rating date.
 

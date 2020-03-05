@@ -965,15 +965,36 @@ Result
 
 ## Movie Reviewer Data Model
 
-Movie, Reviewer, Rating
+```sql
+create table movie 
+(
+movie_id number,
+movie_name varchar2(255)
+);
 
-Movie_Id | Movie_Name 
+create table reviewer
+(
+reviewer_id number,
+reviewer_name varchar2(255)
+);
 
-Reviewer
+create table rating
+(
+rating_id number,
+movie_id number,
+reviewer_id number,
+rating_date date,
+ratings number
+);
+
+
+```
 
 
 
 ### Those who reviewed movie better than first time.(with and without analytical functions)
+
+
 
 ```sql
 

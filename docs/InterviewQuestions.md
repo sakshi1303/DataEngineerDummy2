@@ -1177,6 +1177,7 @@ select cust_id, cust_latest_id from(
 select cust_id, cust_latest_id , dense_rank() over(partition by cust_id order by lvl desc) rn , lvl from t1)
 where rn =1 order by 1;
 ```
+</details>
 
 ## Difference in salary with current employee and minimum salary greater than his/her.
 

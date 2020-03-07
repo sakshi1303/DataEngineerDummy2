@@ -1149,6 +1149,7 @@ Tickets count Group per week basis on Team, Impact
 
 ## Select all customer id and its latest version.
 
+```sql
 create table customer_hist(
 customer_id number,
 customer_prev_id number,
@@ -1159,7 +1160,12 @@ insert into customer_hist values(101,96,105);
 insert into customer_hist values(102,100,104);
 insert into customer_hist values(103,99,106);
 insert into customer_hist values(107,88,111);
+```
 
+<details>
+<summary>Answer</summary>
+
+```sql
 with tab1 as (
 select customer_prev_id cust_id , customer_id cust_prev_id from customer_hist
 union
@@ -1170,10 +1176,15 @@ CONNECT BY PRIOR cust_id = cust_prev_id )
 select cust_id, cust_latest_id from(
 select cust_id, cust_latest_id , dense_rank() over(partition by cust_id order by lvl desc) rn , lvl from t1)
 where rn =1 order by 1;
-
-Database used is oracle.
+```
 
 ## Difference in salary with current employee and minimum salary greater than his/her.
 
+<details>
+<summary>Answer</summary>
+  
+```sql  
 select employeeid , salary, lead(salary) over(order by salary) - salary as diff_salary   from Employee_Yearly_Salary;
+```
 
+</details>

@@ -1131,6 +1131,23 @@ Innid|Overid|Ball_num|Batsman|Bowler|Runs_scored|Is_wide|Is_noball|Is_freehit
 
 ## Find minimum number of changes in a string to convert it into Pallindrome.
 
+<details>
+<summary>Answer</summary>
+
+```python
+
+In [36]: def pallindrome(string): 
+    ...:     cnt_steps=0 
+    ...:     for i in range(len(string)//2): 
+    ...:         if string[i] != string[(i+1)*-1]: 
+    ...:             cnt_steps=cnt_steps + 1 
+    ...:     return cnt_steps 
+    ...:      
+    ...:   
+
+```
+</details>
+
 ## Find files which has been updated in last hour.
 
 ## Find all files in a directory with last name as .pyc (in python and UNIX)

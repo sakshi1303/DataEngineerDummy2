@@ -1150,7 +1150,37 @@ In [36]: def pallindrome(string):
 
 ## Find files which has been updated in last hour.
 
+<details>
+  <summary>Answer</summary>
+
+```bash
+
+find . -mtime -1
+
+```
+
+</details>
+
 ## Find all files in a directory with last name as .pyc (in python and UNIX)
+
+<details>
+  <summary>Answer</summary>
+  
+```python
+ import os
+ for path, dirs, files in os.walk('.'):
+     for file in files :
+         if file.endswith('.pyc'):
+             print(file)
+
+```
+
+```bash
+
+find . -name "*.pyc"
+
+```
+</details>
 
 ## Ticket table , Audit Table Id
 TID|Impact|CreateTime|
@@ -1158,7 +1188,7 @@ AID|TID|CreateTime|Team
 
 Tickets count Group per week basis on Team, Impact
 
-## Backfill data like files missing on 12th process date after 10 days. 
+## Backfill data like files missing on 12th process date after 10 days.   
 
 ## Explain when you disagree with someone.
 

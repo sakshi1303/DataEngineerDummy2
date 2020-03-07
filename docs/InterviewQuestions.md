@@ -1059,9 +1059,71 @@ where ratings > lag_ratings  ;
 </details>
 
 ### Create a report with reviewername|2017|2018|2019
+
+<details>
+<summary>Answer</summary>
+  
+```sql
+select 
+re.reviewer_name , 
+sum_rating."2017",
+sum_rating."2018",
+sum_rating."2019"
+from 
+reviewer re 
+left outer join
+(
+select 
+sum(case when to_char(rating_date,'YYYY') = '2017' then 1 else 0 end) as "2017" ,
+sum(case when to_char(rating_date,'YYYY') = '2018' then 1 else 0 end) as "2018" ,
+sum(case when to_char(rating_date,'YYYY') = '2019' then 1 else 0 end) as "2019" ,
+reviewer_id 
+from
+rating ra 
+group by reviewer_id) sum_rating
+on sum_rating.reviewer_id = re.reviewer_id
+;
+```
+</details>
+
 ### Reviewer name whose have not given rating date.
 
+<details>
+<summary>Answer</summary>
+
+```sql
+select 
+distinct r.reviewer_name
+from 
+reviewer r 
+left outer join
+rating ra
+on r.reviewer_id=ra.reviewer_id
+where rating_date is null;
+
+```
+</details>
+
 ## Print dept and emp with max salary(analytical fns , group by IN clause, joins)
+
+<details>
+<summary>Answer</summary>
+
+```sql
+select 
+e1.* 
+from scott.emp e1 
+join (
+select 
+max(sal) max_sal,
+deptno
+from
+scott.emp 
+group by deptno ) e2 
+on e1.sal=e2.max_sal and e1.deptno=e2.deptno;
+
+```
+</details>
 
 ## Find batsman who scored 3 consecutive dots. 
 

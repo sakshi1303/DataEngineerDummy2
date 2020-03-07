@@ -1022,7 +1022,8 @@ insert into rating values(17,3,6,to_date('20180601','YYYYMMDD'),4.5);
 
 ### Those who reviewed movie better than first time.(with and without analytical functions)
 
-
+<details>
+<summary>Answer</summary>
 
 ```sql
 
@@ -1055,6 +1056,7 @@ on re.reviewer_id = r.reviewer_id
 where ratings > lag_ratings  ;
 
 ```
+</details>
 
 ### Create a report with reviewername|2017|2018|2019
 ### Reviewer name whose have not given rating date.

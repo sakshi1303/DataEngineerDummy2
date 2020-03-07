@@ -929,4 +929,306 @@ Out[17]: [(1, 5, 9), (2, 6, 10), (3, 7, 11), (4, 8, 12)]
 
 ```
 
+### The del statement
+
+```python
+
+In [1]: a = [ -1, 1, 66.25, 333, 333 , 1234.5 ]                                                       
+
+In [2]: del a[0]                                                                                      
+
+In [3]: a                                                                                             
+Out[3]: [1, 66.25, 333, 333, 1234.5]
+
+In [4]: del a[2:4]                                                                                    
+
+In [5]: a                                                                                             
+Out[5]: [1, 66.25, 1234.5]
+
+In [6]: del a[:]                                                                                      
+
+In [7]: a                                                                                             
+Out[7]: []
+
+```
+
 </details>
+
+### Tuples and Sequences
+
+<details>
+<summary>Answer</summary>
+
+```python
+
+In [9]: t = 12345, 54321, 'hello!'                                                                    
+
+In [10]: t[0]                                                                                         
+Out[10]: 12345
+
+In [11]: t                                                                                            
+Out[11]: (12345, 54321, 'hello!')
+
+In [12]: # Tuples may be nested                                                                       
+
+In [13]: # Tuples may be nested                                                                       
+
+In [14]: u = t, (1, 2, 3, 4, 5)                                                                       
+
+In [15]: u                                                                                            
+Out[15]: ((12345, 54321, 'hello!'), (1, 2, 3, 4, 5))
+
+In [16]: t[0] = 88888                                                                                 
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+<ipython-input-16-d739abe3b757> in <module>
+----> 1 t[0] = 88888
+
+TypeError: 'tuple' object does not support item assignment
+
+In [17]: v = ([1,2,3], [3,2,1])                                                                       
+
+In [18]: v                                                                                            
+Out[18]: ([1, 2, 3], [3, 2, 1])
+
+In [24]: empty=()                                                                                     
+
+In [25]: singleton = 'hello',                                                                         
+
+In [26]: len(empty)                                                                                   
+Out[26]: 0
+
+In [27]: len(singleton)                                                                               
+Out[27]: 1
+
+In [28]: singleton                                                                                    
+Out[28]: ('hello',)
+
+In [29]: x, y, z = t   
+
+```
+
+</details>
+
+### Sets
+
+<details>
+<summary>Answer</summary>
+
+```python
+
+In [31]: basket = {'apple','orange','apple','pear','orange','banana'}                                 
+
+In [32]: print(basket)                                                                                
+{'apple', 'orange', 'pear', 'banana'}
+
+In [33]: 'orange' in basket                                                                           
+Out[33]: True
+
+In [34]: 'crabgrass' in basket                                                                        
+Out[34]: False
+
+In [35]: a = set('abracadabra')                                                                       
+
+In [36]: b = set('alacazam')                                                                          
+
+In [37]: a                                                                                            
+Out[37]: {'a', 'b', 'c', 'd', 'r'}
+
+In [38]: a - b                                                                                        
+Out[38]: {'b', 'd', 'r'}
+
+In [39]: a | b                                                                                        
+Out[39]: {'a', 'b', 'c', 'd', 'l', 'm', 'r', 'z'}
+
+In [40]: a & b                                                                                        
+Out[40]: {'a', 'c'}
+
+In [41]: a ^ b                                                                                        
+Out[41]: {'b', 'd', 'l', 'm', 'r', 'z'}
+
+In [42]: a = {x for x in 'abracadabra' if x not in 'abc'}                                             
+
+In [43]: a                                                                                            
+Out[43]: {'d', 'r'}
+
+```
+
+</details>
+
+### Dictionaries
+
+<details>
+<summary>Answer</summary>
+
+```python
+
+In [45]: tel = {'jack' : 4098, 'sape':4139}                                                           
+
+In [46]: tel['guido']=4127                                                                            
+
+In [47]: tel                                                                                          
+Out[47]: {'jack': 4098, 'sape': 4139, 'guido': 4127}
+
+In [48]: tel['jack']                                                                                  
+Out[48]: 4098
+
+In [49]: del tel['sape']                                                                              
+
+In [50]: tel['irv']=4127                                                                              
+
+In [51]: tel                                                                                          
+Out[51]: {'jack': 4098, 'guido': 4127, 'irv': 4127}
+
+In [52]: list(tel)                                                                                    
+Out[52]: ['jack', 'guido', 'irv']
+
+In [53]: sorted(tel)                                                                                  
+Out[53]: ['guido', 'irv', 'jack']
+
+In [54]: 'guido' in tel                                                                               
+Out[54]: True
+
+In [55]: 'jack' not in tel                                                                            
+Out[55]: False
+
+In [56]: dict([('sape', 4139), ('guido',4127),('jack',4908)])                                         
+Out[56]: {'sape': 4139, 'guido': 4127, 'jack': 4908}
+
+In [57]: {x:x**2 for x in (2,4,6)}                                                                    
+Out[57]: {2: 4, 4: 16, 6: 36}
+
+In [58]: dict(sape=4139, guido=4127, jack=4098)                                                       
+Out[58]: {'sape': 4139, 'guido': 4127, 'jack': 4098}
+
+```
+</details>
+
+### Looping Techniques
+
+<details>
+<summary>Answer</summary>
+
+```python
+
+In [60]: knights= {'gallahad': 'the pure', 'robin': ' the brave'}                                     
+
+In [61]: for k, v in knights.items(): 
+    ...:     print(k, v) 
+    ...:                                                                                              
+gallahad the pure
+robin  the brave
+
+In [62]: for i , v in enumerate(['tic, 'tac', 'toe' ])                                                
+  File "<ipython-input-62-67503f558f5e>", line 1
+    for i , v in enumerate(['tic, 'tac', 'toe' ])
+                                     ^
+SyntaxError: invalid syntax
+
+
+In [63]: for i , v in enumerate(['tic', 'tac', 'toe' ]): 
+    ...:     print(i, v) 
+    ...:                                                                                              
+0 tic
+1 tac
+2 toe
+
+In [64]: questions = ['name' , 'quest' , 'favorite color']                                            
+
+In [65]: answers = ['lancelot', 'the holy grail' , 'blue']                                            
+
+In [66]: for q, a in zip(questions, answers): 
+    ...:     print(q, a) 
+    ...:                                                                                              
+name lancelot
+quest the holy grail
+favorite color blue
+
+In [67]: for i in reversed(range(1,10,2)): 
+    ...:     print(i) 
+    ...:                                                                                              
+9
+7
+5
+3
+1
+
+In [69]: basket = ['apple' , 'orange', 'apple', 'pear', 'orange' , 'banana']                          
+
+In [70]: for f in sorted(set(basket)): 
+    ...:     print(f) 
+    ...:                                                                                              
+apple
+banana
+orange
+pear
+
+In [71]: import math                                                                                  
+
+In [72]: raw_data = [ 56.2, float('NaN'), 51.7, 55.3, 52.5, float('NaN'), 47.8]                       
+
+In [73]: filtered_data=[]                                                                             
+
+In [74]: for value in raw_data: 
+    ...:     if not math.isnan(value): 
+    ...:         filtered_data.append(value) 
+    ...:                                                                                              
+
+In [75]: filtered_data                                                                                
+Out[75]: [56.2, 51.7, 55.3, 52.5, 47.8]
+
+
+```
+  
+</details>  
+
+### More on Conditions
+
+<details>
+<summary>Answer</summary>
+
+```python
+
+In [76]: string1, string2, string3 = '', 'Trondheim', 'Hammer Dance'                                  
+
+In [77]: non_null = string1 or string2 or string3                                                     
+
+In [78]: non_null                                                                                     
+Out[78]: 'Trondheim'
+
+```
+</details>
+
+### Comparing Sequences and Other Types
+
+<details>
+<summary>Answer</summary>
+
+```python
+
+In [80]: (1,2,3) < (1,2,4)                                                                            
+Out[80]: True
+
+In [81]: [1,2,3] < [1,2,4]                                                                            
+Out[81]: True
+
+In [82]: 'ABC' < 'C', 'Pascal' < 'Python'                                                             
+Out[82]: (True, True)
+
+In [83]: (1, 2, 3, 4) < (1, 2, 4)                                                                     
+Out[83]: True
+
+In [84]: (1,2) < (1,1,-1)                                                                             
+Out[84]: False
+
+In [85]: (1,2,3) == (1.0,2.0,3.0)                                                                     
+Out[85]: True
+
+In [86]: (1,2,('aa','ab')) < (1,2,('abc','a'), 4)                                                     
+Out[86]: True
+
+
+```
+  
+  
+</details>  

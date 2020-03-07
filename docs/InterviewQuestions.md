@@ -1036,6 +1036,24 @@ from rating
 left outer join reviewer re on  r.reviewer_id=re.reviewer_id
 where ratings > lag_rating ;
 
+select 
+re.reviewer_name
+from 
+reviewer re
+left outer join (
+select 
+ra1.*,
+ra2.ratings lag_ratings
+from 
+rating ra1 
+left outer join 
+rating ra2
+on ra1.movie_id=ra2.movie_id and ra1.reviewer_id=ra2.reviewer_id 
+where ra2.rating_date = (select max(rating_date) from rating ra3 where ra3.reviewer_id=ra1.reviewer_id and ra3.movie_id=ra1.movie_id and ra3.rating_date < ra1.rating_date 
+)) r 
+on re.reviewer_id = r.reviewer_id 
+where ratings > lag_ratings  ;
+
 ```
 
 ### Create a report with reviewername|2017|2018|2019

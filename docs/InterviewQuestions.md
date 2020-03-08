@@ -1185,6 +1185,7 @@ select * from tb1 cross join tb2 ;
 7,9,9,11,30
   
 </details>  
+
 ## Find minimum number of changes in a string to convert it into Pallindrome.
 
 <details>

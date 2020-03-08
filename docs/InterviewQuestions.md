@@ -471,7 +471,7 @@ select t1.team, t2.team from teams t1 cross join teams t2 where t1.team < t2.tea
 
 <details>
 <summary>Answer</summary>
-By extracting source system id and create other attributes as UNKNOWN and update it later.
+Derive dimensional context and then load fact table and then later update when dimensional data comes. 
 </details>
 
 ## How to reload corrupt data as quickly as possible ?
@@ -1129,6 +1129,62 @@ on e1.sal=e2.max_sal and e1.deptno=e2.deptno;
 
 Innid|Overid|Ball_num|Batsman|Bowler|Runs_scored|Is_wide|Is_noball|Is_freehit
 
+<details>
+<summary>Answer</summary>
+
+```sql
+
+select 
+sum(case when lag_run_Scored <> runs_scored then 1 else 0 end)
+over(partition by innid,batsman order by over_id,ball_num) lag_run_scored, 
+batsman,
+runs_scored
+from(
+select 
+lag(runs_scored) over(partition by innid,batsman order by over_id,ball_num) lag_run_scored, 
+batsman,
+runs_scored
+from match_details md
+where is_wide='N' and is_noball='N' ) 
+
+```
+
+</details>
+  
+## All combination with NULL and joins
+
+```sql
+CREATE TABLE TB1(
+pk NUMBER);
+
+CREATE TABLE TB2(
+pk NUMBER);
+
+insert into tb1 values(1);
+insert into tb1 values(1);
+insert into tb1 values(1);
+insert into tb1 values(2);
+insert into tb1 values(3);
+insert into tb1 values(null);
+
+insert into tb2 values(1);
+insert into tb2 values(1);
+insert into tb2 values(3);
+insert into tb2 values(4);
+insert into tb2 values(null);
+
+select * from tb1 inner join tb2 using(pk) ;
+select * from tb1 left outer join tb2 using(pk) ;
+select * from tb1 right outer join tb2 using(pk) ;
+select * from tb1 full outer join tb2 using(pk) ;
+select * from tb1 cross join tb2 ;
+```
+
+<details><summary>Answer</summary>
+
+7,9,9,11,30
+  
+</details>  
 ## Find minimum number of changes in a string to convert it into Pallindrome.
 
 <details>
@@ -1188,11 +1244,69 @@ AID|TID|CreateTime|Team
 
 Tickets count Group per week basis on Team, Impact
 
+<details>
+<summary>Answer</summary>
+  
+```sql
+
+select
+to_week(createtime) , team,impact,count(*)
+from(
+select 
+distinct t.* , a.team
+from 
+ticket t
+join
+audit a 
+on t.tid=a.tid)
+group by to_week(createtime) , team,impact
+
+```
+
+</details>
+
 ## Backfill data like files missing on 12th process date after 10 days.   
+
+<details>
+  <summary>Answer</summary>
+  
+1. Insert those records which are received only on 12th process date
+2. Update those records for which latest was received on 12th only.
+
+</details>
+
 
 ## Explain when you disagree with someone.
 
+<details>
+  <summary>Answer</summary>
+  
+  1. Disagreed regarding tuning for performance issues. 
+  2. Created a demo and a technical documentation.
+  3. Gave a 5 min presentation with clear benefits quantitatively. 
+  4. Approached senior management as well with clear and crisp problem statement and solution. 
+  
+  </details>
+
 ## Explain when you helped someone. 
+
+<details><summary>Answer</summary>
+  
+  1. Testers needed to reconcile data between two databases. 
+  2. Created utility extracting difference between two datasets.
+  3. Using multithreading to speed up its performance. 
+  
+  </details>
+  
+## How to motivate someone who is not motivated ?
+
+<details><summary>Answer</summary>
+
+1. Informal catchup with the guy everyday for 2-3 weeks asking about skills he is interested in and his opinion of projects.
+2. Made sure to bring to everyone's notice how good of a work he is doing. 
+3. Asked what technology he is most interested in and then arranged for his inclusion even if it meant putting in some extra hours. 
+
+</details>  
 
 ## Select all customer id and its latest version.
 

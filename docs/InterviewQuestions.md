@@ -1351,3 +1351,19 @@ select employeeid , salary, lead(salary) over(order by salary) - salary as diff_
 ```
 
 </details>
+
+## Printing all combinations with employees.
+
+<details>
+  <summary>Answer</summary>
+  
+```sql
+with rec_table(empno,mgr,path) as
+(
+select empno , null as mgr , to_char(empno) path from scott.emp where mgr is null
+union all
+select e.empno , e.mgr , r.path || ',' || e.empno path from rec_table r join scott.emp e on e.mgr=r.empno )
+select * from rec_table ;
+
+```
+</details>

@@ -1255,3 +1255,28 @@ In [2]: def fib2(n):
    
 ```   
 </details>  
+
+## Classes 
+
+### Scopes and Namespaces Example
+
+<details>
+  <summary>Answer</summary>
+  
+  ```python
+  In [7]: def scope_test():
+   ...:     def do_local():
+   ...:         spam="local spam"
+   ...:     def do_nonlocal():
+   ...:         nonlocal spam
+   ...:         spam="nonlocal spam"
+   ...:     def do_global():
+   ...:         global spam
+   ...:         spam="global spam"
+  File "<ipython-input-7-e091150e6d1b>", line 5
+    nonlocal spam
+    ^
+SyntaxError: no binding for nonlocal 'spam' found
+```
+
+</details>

@@ -1367,3 +1367,27 @@ select * from rec_table ;
 
 ```
 </details>
+
+## Find all products sold in november 2018
+
+<details>
+  <summary>Answer</summary>
+
+```sql
+select 
+p.product_name
+from
+(select 
+distinct ol.product_id  
+from orders o
+left outer join 
+order_line on o.order_id=ol.order_id
+left outer join date d on d.day=o.order_day
+where d.month='November' and d.year=2018
+) tbl
+inner join products p 
+on p.product_id=tbl.product_id
+```
+  
+  
+  </details>

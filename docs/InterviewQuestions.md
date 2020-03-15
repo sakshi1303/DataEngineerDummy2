@@ -1388,6 +1388,25 @@ where d.month='November' and d.year=2018
 inner join products p 
 on p.product_id=tbl.product_id
 ```
-  
-  
-  </details>
+</details>
+
+## Sales rep who sold most amount of products as per amount 
+
+<details>
+  <summary>Answer</summary>
+
+```sql
+select 
+r.repr_name , sum(ol.amt)
+from
+orders o 
+left join 
+order_line ol
+on o.order_id=ol.order_id
+left join 
+representative r 
+on r.repr_id=o.repr_id 
+group by r.repr_name 
+
+```
+</details>

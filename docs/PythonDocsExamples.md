@@ -1228,8 +1228,9 @@ In [86]: (1,2,('aa','ab')) < (1,2,('abc','a'), 4)
 Out[86]: True
 
 
-```
-  
+``` 
+</details>
+ 
 ## Modules
 
 <details>

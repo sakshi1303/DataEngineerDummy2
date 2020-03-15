@@ -1238,24 +1238,73 @@ Out[86]: True
   
 ```python
 
-In [1]: def fib(n):
-   ...:     a,b = 0,1
-   ...:     while a < n:
-   ...:         print(a, end=' ')
-   ...:         a, b = b, a + b
-   ...:     print()
-   ...:
+aditya@aditya-Inspiron-5559:~$ cat fibo.py
+def fib(n):
+    a, b = 0,1
+    while a < n:
+        print(a, end=' ')
+        a, b = b , a + b
+    print()
 
-In [2]: def fib2(n):
-   ...:     result = []
-   ...:     a, b = 0,1
-   ...:     while a < n:
-   ...:         result.append(a)
-   ...:         a, b = b, a + b
-   ...:     return result
+def fib2(n):
+    result = []
+    a, b = 0,1
+    while a < n:
+        result.append(a)
+        a, b = b, a+ b
+    return result
+    
+In [1]: import fibo                                                                                  
+
+In [2]: fibo.fib(1000)                                                                               
+0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987 
+
+In [3]: fibo.fib2(100)                                                                               
+Out[3]: [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89]
+
+In [4]: fibo.__name__                                                                                
+Out[4]: 'fibo'
+
+In [5]: fib=fibo.fib                                                                                 
+
+In [6]: fib(500)                                                                                     
+0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 
+
    
 ```   
 </details>  
+
+### More on Modules
+
+<details>
+<summary>Answer</summary>
+  
+```python
+
+In [7]: from fibo import fib, fib2                                                                   
+
+In [8]: fib(500)                                                                                     
+0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 
+
+In [9]: from fibo import *                                                                           
+
+In [10]: fib(500)                                                                                    
+0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 
+
+In [11]: import fibo as fib                                                                          
+
+In [12]: fib.fib(500)                                                                                
+0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 
+
+In [13]: from fibo import fib as fibonacci                                                           
+
+In [14]: fibonacci(500)                                                                              
+0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 
+
+
+```
+  
+</details>
 
 ## Classes 
 

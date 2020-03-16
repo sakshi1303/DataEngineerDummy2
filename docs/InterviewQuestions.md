@@ -1410,3 +1410,44 @@ group by r.repr_name
 
 ```
 </details>
+
+## Each student with maximum marks and students
+
+```sql
+CREATE TABLE STUDENTS
+(
+student_id NUMBER ,
+subject VARCHAR2(100),
+marks NUMBER
+);
+
+insert into students values(1,'ENG',90);
+insert into students values(1,'HIN',93);
+insert into students values(1,'MATHS',92);
+insert into students values(11,'ENG',97);
+insert into students values(11,'HIN',93);
+insert into students values(11,'MATHS',92);
+
+```
+
+<details>
+  <summary>Answer</summary>
+  
+  ```sql
+  
+  select * from students where (student_id,marks) IN (
+select student_id , max(marks) from students group by student_id );
+
+select s1.* from students s1 inner join  (
+select student_id , max(marks) as marks from students group by student_id ) s2
+on s1.student_id=s2.student_id and s1.marks=s2.marks;
+
+select student_id,marks,subject from
+(select 
+s1.student_id, s1.marks,s1.subject , dense_rank() over(partition by  student_id order by marks desc) rn 
+from 
+students s1) t
+where rn=1;
+  
+  ```
+</details>

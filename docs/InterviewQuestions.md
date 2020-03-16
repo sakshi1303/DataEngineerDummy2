@@ -1451,3 +1451,37 @@ where rn=1;
   
   ```
 </details>
+
+## Running sum of customer data
+
+```sql
+
+CREATE TABLE customers 
+(
+customer_id NUMBER , 
+month_id NUMBER ,
+amount NUMBER
+);
+
+insert into customers values (1,1,100);
+insert into customers values (1,2,200);
+insert into customers values (1,4,150);
+insert into customers values (2,5,100);
+insert into customers values (2,12,200);
+insert into customers values (2,7,200);
+
+```
+
+<details>
+  <summary>Answer</summary>
+  
+  ```sql
+  
+  select 
+c.*,
+sum(amount) over(partition by customer_id order by month_id) running_sum
+from customers c
+  
+  ```
+  
+  </details>

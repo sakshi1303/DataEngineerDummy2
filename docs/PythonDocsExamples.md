@@ -1389,6 +1389,65 @@ C>
 >>> dir(builtins)
 ['ArithmeticError', 'AssertionError', 'AttributeError', 'BaseException', 'BlockingIOError', 'BrokenPipeError', 'BufferError', 'BytesWarning', 'ChildProcessError', 'ConnectionAbortedError', 'ConnectionError', 'ConnectionRefusedError', 'ConnectionResetError', 'DeprecationWarning', 'EOFError', 'Ellipsis', 'EnvironmentError', 'Exception', 'False', 'FileExistsError', 'FileNotFoundError', 'FloatingPointError', 'FutureWarning', 'GeneratorExit', 'IOError', 'ImportError', 'ImportWarning', 'IndentationError', 'IndexError', 'InterruptedError', 'IsADirectoryError', 'KeyError', 'KeyboardInterrupt', 'LookupError', 'MemoryError', 'ModuleNotFoundError', 'NameError', 'None', 'NotADirectoryError', 'NotImplemented', 'NotImplementedError', 'OSError', 'OverflowError', 'PendingDeprecationWarning', 'PermissionError', 'ProcessLookupError', 'RecursionError', 'ReferenceError', 'ResourceWarning', 'RuntimeError', 'RuntimeWarning', 'StopAsyncIteration', 'StopIteration', 'SyntaxError', 'SyntaxWarning', 'SystemError', 'SystemExit', 'TabError', 'TimeoutError', 'True', 'TypeError', 'UnboundLocalError', 'UnicodeDecodeError', 'UnicodeEncodeError', 'UnicodeError', 'UnicodeTranslateError', 'UnicodeWarning', 'UserWarning', 'ValueError', 'Warning', 'ZeroDivisionError', '_', '__build_class__', '__debug__', '__doc__', '__import__', '__loader__', '__name__', '__package__', '__spec__', 'abs', 'all', 'any', 'ascii', 'bin', 'bool', 'breakpoint', 'bytearray', 'bytes', 'callable', 'chr', 'classmethod', 'compile', 'complex', 'copyright', 'credits', 'delattr', 'dict', 'dir', 'divmod', 'enumerate', 'eval', 'exec', 'exit', 'filter', 'float', 'format', 'frozenset', 'getattr', 'globals', 'hasattr', 'hash', 'help', 'hex', 'id', 'input', 'int', 'isinstance', 'issubclass', 'iter', 'len', 'license', 'list', 'locals', 'map', 'max', 'memoryview', 'min', 'next', 'object', 'oct', 'open', 'ord', 'pow', 'print', 'property', 'quit', 'range', 'repr', 'reversed', 'round', 'set', 'setattr', 'slice', 'sorted', 'staticmethod', 'str', 'sum', 'super', 'tuple', 'type', 'vars', 'zip']
 >>> 
+```
+
+</details>
+
+## Input and Output
+
+### Fancier Output Formatting
+
+<details>
+<summary>Answer</summary>
+
+```python
+
+In [1]: year = 2016                                                             
+
+In [2]: event = 'Referendum'                                                    
+
+In [3]: f'Results of the {year} {event}'                                        
+Out[3]: 'Results of the 2016 Referendum'
+
+In [4]: yes_votes = 42_572_654                                                  
+
+In [5]: no_votes = 43_132_495                                                   
+
+In [6]: percentage = yes_votes / (yes_votes + no_votes)                         
+
+In [7]: '{:-9} YES votes {:2.2%}'.format(yes_votes, percentage)                 
+Out[7]: ' 42572654 YES votes 49.67%'
+
+In [8]: s='Hello, World.'                                                                                   
+
+In [9]: str(s)                                                                                              
+Out[9]: 'Hello, World.'
+
+In [10]: repr(s)                                                                                            
+Out[10]: "'Hello, World.'"
+
+In [11]: str(1/7)                                                                                           
+Out[11]: '0.14285714285714285'
+
+In [12]: x = 10 * 3.25                                                                                      
+
+In [13]: y = 200 * 200                                                                                      
+
+In [14]: repr(x), repr(y)                                                                                   
+Out[14]: ('32.5', '40000')
+
+In [15]: x,y                                                                                                
+Out[15]: (32.5, 40000)
+
+In [16]: 'hello, world\n'                                                                                   
+Out[16]: 'hello, world\n'
+
+In [17]: print('hello, world\n')                                                                            
+hello, world
+
+
+In [18]: repr((x, y, ('spam','eggs')))                                                                      
+Out[18]: "(32.5, 40000, ('spam', 'eggs'))"
 
 
 ```

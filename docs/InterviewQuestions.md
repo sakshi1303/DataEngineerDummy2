@@ -1482,6 +1482,36 @@ c.*,
 sum(amount) over(partition by customer_id order by month_id) running_sum
 from customers c
   
-  ```
+  ```  
+</details>
+
+## Knapsack Problem
+
+<details>
+<summary>Answer</summary>
+
+```sql  
+WITH rsf (nxt_id, lev, tot_weight, tot_profit, path) AS (
+SELECT id nxt_id, 0 lev, item_weight tot_weight, item_profit tot_profit, To_Char (id) path
+  FROM items
+ UNION ALL
+SELECT n.id, 
+       r.lev + 1, 
+       r.tot_weight + n.item_weight,
+       r.tot_profit + n.item_profit,
+       r.path || ',' || To_Char (n.id)
+  FROM rsf r
+  JOIN items n
+    ON n.id > r.nxt_id
+   AND r.tot_weight + n.item_weight <= 9
+) SEARCH DEPTH FIRST BY nxt_id SET line_no 
+SELECT LPad (To_Char(nxt_id), lev + 1, '*') node,tot_weight, tot_profit,
+       CASE WHEN lev >= Lead (lev, 1, lev) OVER (ORDER BY line_no) THEN 'Y' END is_leaf,
+       path
+  FROM rsf
+ ORDER BY line_no
+ 
+``` 
+</details> 
   
-  </details>
+  

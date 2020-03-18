@@ -1452,6 +1452,8 @@ Out[18]: "(32.5, 40000, ('spam', 'eggs'))"
 
 ```
 
+</details>
+
 ### Formatted String Literals
 
 <details>

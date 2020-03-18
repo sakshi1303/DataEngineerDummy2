@@ -1481,12 +1481,7 @@ My hovercraft is full of eels.
 In [7]: print(f'My hovercraft is full of {animals!r}.')                         
 My hovercraft is full of 'eels'.
 
-
-
 ```
-
-</details>
-  
 
 </details>
 

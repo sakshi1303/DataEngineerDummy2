@@ -1487,6 +1487,21 @@ from customers c
 
 ## Knapsack Problem
 
+```sql
+create table items 
+(
+id number , 
+item_weight number , 
+item_profit number 
+);
+
+insert into items values (1, 3, 10);
+insert into items values (2, 4, 20);
+insert into items values (3, 5, 30);
+insert into items values (4,6 , 40);
+
+```
+
 <details>
 <summary>Answer</summary>
 

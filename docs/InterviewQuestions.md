@@ -30,8 +30,6 @@ case when src < dest then src else dest end ,
 case when src > dest then src else dest end
 having count(*) >1;
 ```
-</details>
-
 ### Duplicate Cities 
 
 ```sql
@@ -51,6 +49,7 @@ from dist d1 left outer join dist d2
               and d1.dest = d2.src
 where d1.src <= NVL(d2.src, d1.src);
 ```
+</details>
 
 ## Sequence of numbers
 

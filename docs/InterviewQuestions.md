@@ -131,6 +131,31 @@ select 1 from dual;
 ```sql
 select * from ipl_batsman_score ibs1 where ibs1.score > ALL(select ibs2.score from ipl_batsman_score ibs2 where ibs1.batsman_id=ibs2.batsman_id and ibs1.match_id > ibs2.match_id);
 ```
+
+```sql
+with t as 
+(
+select 
+distinct 
+case when ibs1.score > ibs2.score then 'Y' else 'N' end val_comp , 
+ibs1.batsman_id,
+ibs1.match_id 
+from 
+ipl_batsman_Score  ibs1
+left outer join 
+ipl_batsman_Score  ibs2
+on ibs1.batsman_id=ibs2.batsman_id 
+AND ibs1.match_id > ibs2.match_id)
+select 
+t1.*
+from t t1 
+left outer join t t2 
+on t1.batsman_id = t2.batsman_id 
+and t1.match_id=t2.match_id 
+and t1.val_comp <> t2.val_comp 
+where t2.batsman_id is null and t1.val_comp = 'Y';
+
+```
 </details>
 
 

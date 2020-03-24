@@ -133,6 +133,18 @@ select * from ipl_batsman_score ibs1 where ibs1.score > ALL(select ibs2.score fr
 ```
 
 ```sql
+select batsman_id, count(*)
+from
+(select batsman_id, match_id, score , rank() over (partition by batsman_id order by score) rn
+from ipl_batsman_score i1 
+where i1.score > ALL( select i2.score from ipl_batsman_score i2 
+                      where i1.batsman_id  = i2.batsman_id 
+                      and i1.match_id  > i2.match_id  )
+)where rn <> 1
+group by batsman_id;
+```
+
+```sql
 with t as 
 (
 select 

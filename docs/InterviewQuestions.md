@@ -450,6 +450,9 @@ select * from tb1 cross join tb2 ;
 ```bash
 find <Path_To_Old_Files> -type f -mtime +30 | xargs rm -f
 ```
+```bash
+find <Path_To_Old_Files> -type f -mtime +30 -exec rm -f {} \;
+```
 </details>
 
 ## Incremental data load

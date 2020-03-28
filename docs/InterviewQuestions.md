@@ -344,6 +344,33 @@ where t.team = mr.teama or t.team=mr.teamb
 )
 order by 1,match_id;
 ```
+
+```sql
+with temp as
+(
+select teama, count(res) cnt from
+(
+select teama, match_id, winner,
+sum(case when winner <> prev then 1 else 0 end) over(partition by teama order by match_id) res
+from
+(
+select m2.teama, m1.match_id, m1.winner, 
+lag(m1.winner) over (partition by m2.teama order by match_id) prev
+from match_results m1
+join 
+(select distinct teama from match_results
+union
+select distinct teamb from match_results) m2
+on (m2.teama = m1.teama or m2.teama = m1.teamb)
+)
+)
+group by teama, res
+order by teama, res
+)
+select teama, cnt from temp where
+cnt = (select max(cnt) from temp); 
+```
+
 </details>
 
 ## Users were active in the month of January.

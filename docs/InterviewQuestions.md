@@ -561,7 +561,7 @@ on tp1.teama = tp2.teamb
 and tp1.teamb = tp2.teama
 where tp1.teama <= tp2.teama
 order by 1;
-```sql
+```
 
 </details>
 

@@ -551,6 +551,18 @@ insert into teams values('AUS');
 select t1.team, t2.team from teams t1 cross join teams t2 where t1.team < t2.team ;
 ```
 
+```sql
+with temp as
+(select t1.team as teama, t2.team as teamb
+from teams t1 join teams t2 on t1.team <> t2.team)
+select  tp1.teama, tp1.teamb 
+from temp tp1 join temp tp2 
+on tp1.teama = tp2.teamb 
+and tp1.teamb = tp2.teama
+where tp1.teama <= tp2.teama
+order by 1;
+```sql
+
 </details>
 
 ## How to handle late arriving dimensions ?

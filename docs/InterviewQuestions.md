@@ -627,6 +627,17 @@ group by
 case when ol1.product < ol2.product then ol1.product else ol2.product end , 
 case when ol1.product < ol2.product then ol2.product else ol1.product end ;
 ```
+
+```sql
+select o1.product, o2.product , count(*)
+from order_line o1 join order_line o2
+on o1.order_id = o2.order_id
+and o1.product <> o2.product
+where o1.product < o2.product
+group by o1.product, o2.product
+order by 3 desc;
+```
+
 </details>
 
 ## Design a movie booking system

@@ -757,6 +757,9 @@ Preaggregate class and school attendance.
 <details>
 <summary>Answer</summary>
 One dimension which can be used in multiple ways just like Date dimension.
+  
+A single physical dimension can be referenced multiple times in a fact table, with each reference linking to a logically distinct role for the dimension. For instance, a fact table can have several dates, each of which is represented by a foreign key to the date dimension.  It is essential that each foreign key refers to a separate view of the date dimension so that the references are independent. These separate dimension views (with unique attribute column names) are called roles.
+
 </details>
 
 ## Compare current week’s data to previous year’s  corresponding week’s data.

@@ -708,6 +708,23 @@ group by batsmen_id, year )) where inc_pct > 15;
 
 ## Check which department has more combined salary than 500000.
 
+```sql
+create table emp
+(empid number,
+deptid number,
+salary number
+);
+
+insert into emp values(1, 1, 100000);
+insert into emp values(2, 1, 200000);
+insert into emp values(3, 1, 300000);
+insert into emp values(4, 2, 500000);
+insert into emp values(5, 3, 400000);
+insert into emp values(6, 3, 100000);
+insert into emp values(7, 4, 800000);
+insert into emp values(8, 5, 200000);
+```
+
 <details>
 <summary>Answer</summary>
   
@@ -718,6 +735,13 @@ join departments d
 on e.department_id=d.department_id
 group by d.department
 having sum(e.salary) > 500000;
+```
+
+```sql
+select deptid, sum(salary)
+from emp
+group by deptid
+having sum(salary) > 500000;
 ```
 </details>
 

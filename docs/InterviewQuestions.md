@@ -1619,6 +1619,16 @@ sum(amount) over(partition by customer_id order by month_id) running_sum
 from customers c
   
   ```  
+  
+  ```sql
+  select c2.customer_id, c2.month_id, sum(c1.amount)
+from customers c1 join customers c2
+on c1.customer_id = c2.customer_id
+and c1.month_id <= c2.month_id
+group by c2.customer_id, c2.month_id
+order by c2.customer_id, c2.month_id
+```
+  
 </details>
 
 ## Knapsack Problem

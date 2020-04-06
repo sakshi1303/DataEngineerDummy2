@@ -1622,3 +1622,5 @@ values
 ('Lucky','Mapsko',5,to_Date('20200101','YYYYMMDD'));
 
 ```
+<details>
+  <summary>Answer</summary>

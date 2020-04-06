@@ -1727,6 +1727,7 @@ when not matched then
 insert (customer_name, customer_address, customer_phone_no) 
 values (stg.customer_name, stg.customer_address, stg.customer_phone_no);
 ```
+</details> 
 
 ## DWH - SCD2
 

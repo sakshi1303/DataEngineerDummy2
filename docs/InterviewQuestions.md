@@ -1718,7 +1718,7 @@ values
   
 ```sql
 merge into customers c1
-using (select * from cust_stg) stg
+using cust_stg stg
 on (c1.customer_name = stg.customer_name)
 when matched then 
 update set c1.customer_address = stg.customer_address,
@@ -1727,6 +1727,26 @@ when not matched then
 insert (customer_name, customer_address, customer_phone_no) 
 values (stg.customer_name, stg.customer_address, stg.customer_phone_no);
 ```
+
+```sql
+
+create unique index cust_stg_uq on cust_stg(customer_name);
+
+update 
+  (select c1.customer_address AS new_customer_address, c1.
+  AS new_customer_phone_no, 
+          stg.customer_address AS old_customer_address, stg.customer_phone_no AS old_customer_phone_no
+   from customers c1 join cust_stg stg on c1.customer_name = stg.customer_name) cust
+set cust.new_customer_address = cust.old_customer_address,
+    cust.new_customer_phone_no = cust.old_customer_phone_no;
+    
+insert into customers(customer_name,customer_address, customer_phone_no)
+(select stg.customer_name, stg.customer_address, stg.customer_phone_no
+from cust_stg stg left outer join customers c1 
+on  stg.customer_name  = c1.customer_name
+where c1.customer_name is  null)
+```
+
 </details> 
 
 ## DWH - SCD2

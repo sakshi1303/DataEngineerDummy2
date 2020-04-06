@@ -1581,3 +1581,44 @@ when not matched then
 insert (customer_name, customer_address, customer_phone_no) 
 values (stg.customer_name, stg.customer_address, stg.customer_phone_no);
 ```
+
+## DWH - SCD2
+
+```sql
+CREATE TABLE customers (
+  customer_id      NUMBER        GENERATED ALWAYS AS IDENTITY,
+  customer_name   VARCHAR2(255) NOT NULL,
+  customer_address VARCHAR2(255) ,
+  customer_phone_no NUMBER,
+  effective_Date date ,
+  expiration_date date
+);
+
+insert into customers
+(customer_name,customer_address,customer_phone_no,effective_Date,expiration_date)
+values
+('Aditya','Mapsko',1,to_Date('20190101','YYYYMMDD'),to_date('99991231','YYYYMMDD'));
+
+insert into customers
+(customer_name,customer_address,customer_phone_no,effective_Date,expiration_date)
+values
+('Sakshi','Sector-17',2,to_Date('20180101','YYYYMMDD'),to_date('99991231','YYYYMMDD'));
+
+CREATE TABLE cust_stg (
+  customer_name   VARCHAR2(255) NOT NULL,
+  customer_address VARCHAR2(255) ,
+  customer_phone_no NUMBER,
+  update_date DATE
+);
+
+insert into cust_stg
+(customer_name,customer_address,customer_phone_no,update_Date)
+values
+('Sakshi','Mapsko',3,to_Date('20190201','YYYYMMDD'));
+
+insert into cust_stg
+(customer_name,customer_address,customer_phone_no,update_Date)
+values
+('Lucky','Mapsko',5,to_Date('20200101','YYYYMMDD'));
+
+```

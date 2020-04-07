@@ -1791,3 +1791,23 @@ values
 ```
 <details>
   <summary>Answer</summary>
+  
+```sql
+
+create unique index cust_stg_uq on cust_stg(customer_name);
+
+insert into customers(customer_name, customer_address, customer_phone_no, effective_date, expiration_date)
+select stg.customer_name, stg.customer_address, stg.customer_phone_no, stg.update_date, '31-DEC-99'
+from cust_stg stg left outer join customers cust on stg.customer_name = cust.customer_name;
+
+update 
+(select cust.effective_date AS old_effective_date, cust.expiration_date AS old_expiration_date,
+        stg.update_date AS new_effective_date
+from customers cust join cust_stg stg on cust.customer_name = stg.customer_name 
+and  cust.effective_date <> stg.update_date                       
+) s1
+set s1.old_expiration_date = s1.new_effective_date;
+
+```
+
+</details>

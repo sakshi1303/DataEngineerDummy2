@@ -1808,6 +1808,18 @@ and  cust.effective_date <> stg.update_date
 ) s1
 set s1.old_expiration_date = s1.new_effective_date;
 
+merge into customers cust
+using (select c1.customer_name, c1.customer_address, c1.customer_phone_no, c1.effective_date AS effective_date, cs.update_date
+from customers c1 join cust_stg cs on c1.customer_name = cs.customer_name
+union all
+select customer_name, customer_address, customer_phone_no, update_date AS effective_date, update_date from cust_stg) stg
+on (cust.customer_name = stg.customer_name and cust.effective_date = stg.effective_date)
+when matched then update
+set cust.expiration_date = stg.update_date
+when not matched then 
+insert(customer_name, customer_address, customer_phone_no, effective_date, expiration_date) 
+values(stg.customer_name, stg.customer_address, stg.customer_phone_no, stg.update_date, '31-DEC-9999');
+
 ```
 
 </details>

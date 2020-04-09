@@ -638,6 +638,20 @@ group by o1.product, o2.product
 order by 3 desc;
 ```
 
+```sql
+select * from
+from (
+select o1.product_id, o2.product_id, count(*) cnt,
+dense_rank() over (order by count(*) desc) rn
+from order o1 join orders o2
+on o1.order_id = o2.order_id
+and o1.product_name <> o2.product_name
+where o1.product_name < o2.product_name
+group by o1.product_id, o2.product_id
+order by 3 desc
+) where rn = 1;
+```
+
 </details>
 
 ## Design a movie booking system

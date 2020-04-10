@@ -783,6 +783,9 @@ A single physical dimension can be referenced multiple times in a fact table, wi
   
 ```sql
 select (next_day(trunc(sysdate+10),'MONDAY') - next_day(trunc(sysdate,'YYYY')- 7 , 'MONDAY'))/7 from dual;
+
+select ROUND((to_date('20-APR-2020','DD-MON-YYYY') - to_date('01-JAN-2020','DD-MON-YYYY'))/7)+1 from dual;
+
 ```
 </details>
 

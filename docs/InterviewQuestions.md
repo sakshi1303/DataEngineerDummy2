@@ -471,6 +471,11 @@ Use audit dimension or hash values to compare data.
  
 range returns list and xrange returns generator objects.
 
+range - returns list object, takes more memory, slower, all list operations can be applied
+xrange - returns generator object, less memory, faster in speed, list operations cannot be applied
+
+Python3 - xrange deprecated and range behave as xrange
+
 </details>
 
 ## Use awk to divide the file between even and odd number of lines

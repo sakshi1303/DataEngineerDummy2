@@ -871,6 +871,36 @@ b.hotel_table_id is null
 and ht.hotel_table_capacity = :capacity;
 ```
 
+```
+create table hotel (hotel_id number);
+insert into hotel values (1);
+insert into hotel values (2);
+
+create table seats (seatid number, seattype number);
+insert into seats values (1, 1);
+insert into seats values (2, 2);
+insert into seats values (3, 2);
+insert into seats values (4, 4);
+insert into seats values (5, 4);
+insert into seats values (6, 2);
+
+create table booking (booking_id number, hotel_id number, seat_id number, booking_date date, booking_time varchar2(20));
+insert into booking values (1, 1 , 2, '08-APR-2020', '8PM');
+insert into booking values (2, 1 , 3, '09-APR-2020', '8PM');
+insert into booking values (3, 1 , 4, '10-APR-2020', '9PM');
+insert into booking values (4, 1 , 1, '09-APR-2020', '8PM');
+insert into booking values (5, 1 , 5, '08-APR-2020', '9PM');
+insert into booking values (6, 1 , 2, '09-APR-2020', '8PM');
+
+select s1.seatid, b1.* 
+from seats s1 left outer join booking b1 
+on s1.seatid = b1.seat_id 
+and b1.booking_date = '09-APR-2020' and b1.booking_time = '8PM'
+where b1.seat_id is null 
+
+```
+
+
 </details>
 
 ## Last 3 orders of a customer

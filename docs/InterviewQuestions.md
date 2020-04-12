@@ -871,7 +871,7 @@ b.hotel_table_id is null
 and ht.hotel_table_capacity = :capacity;
 ```
 
-```
+```sql
 create table hotel (hotel_id number);
 insert into hotel values (1);
 insert into hotel values (2);

@@ -1043,6 +1043,29 @@ on o1.order_day=o2.order_Day and o1.order_id=o2.order_id
 and o2.processing_day = (select max(o3.processing_Day) from  orders o3 where o1.order_day=o3.order_day and o1.order_id=o3.order_id and o3.processing_day < o1.processing_Day); 
 
 ```
+
+``` sql
+create table tab1(col1 number);
+
+insert into tab1 values (1);
+insert into tab1 values (2);
+insert into tab1 values (3);
+insert into tab1 values (4);
+insert into tab1 values (5);
+insert into tab1 values (7);
+
+
+select * from tab1 t1 left outer join tab1 t2 on t1.col1 > t2.col1
+and t2.col1 = (select max(t3.col1) from tab1 t3 where t3.col1 < t1.col1)
+
+
+select t1.col1, max(t2.col1)
+from tab1 t1 left outer join tab1 t2 on t1.col1 > t2.col1
+group by t1.col1
+order by t1.col1;
+
+```
+
 </details>
 
 ## Count how many employee id are under a manager table. 

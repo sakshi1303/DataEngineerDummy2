@@ -1871,6 +1871,98 @@ where d.month='November' and d.year=2018
 inner join products p 
 on p.product_id=tbl.product_id
 ```
+
+```sql
+
+create table orders(
+order_id number,
+customer_id number,
+order_date date,
+order_time varchar(20),
+order_amount number);
+
+create table order_line(
+order_id number,
+order_line_id number,
+product_id number,
+delivery_address_id number);
+
+create table deliver_address(
+delivery_address_id number,
+address_line_1 varchar2(50),
+address_line_2 varchar2(50),
+address_line_3 varchar2(50),
+pin number,
+state varchar2(50));
+
+create table date_dim (
+eff_dt date,
+eff_year number
+);
+
+create table product (
+pid number,
+pname varchar2(20)
+);
+
+insert into orders values(1, 1, to_date('08-APR-2020','DD-MON-YYYY'),'10AM',500);
+insert into orders values(2, 2, to_date('09-APR-2020','DD-MON-YYYY'),'10AM',700);
+insert into orders values(3, 1, to_date('08-APR-2019','DD-MON-YYYY'),'9AM',400);
+insert into orders values(4, 2, to_date('10-APR-2019','DD-MON-YYYY'),'10AM',500);
+insert into orders values(5, 1, to_date('08-NOV-2018','DD-MON-YYYY'),'10AM',800);
+insert into orders values(6, 2, to_date('08-NOV-2018','DD-MON-YYYY'),'8AM',700);
+insert into orders values(7, 3, to_date('09-NOV-2018','DD-MON-YYYY'),'9AM',400);
+insert into orders values(8, 1, to_date('10-NOV-2018','DD-MON-YYYY'),'10AM',500);
+
+insert into order_line values(1,1,104,1);
+insert into order_line values(2,2,107,2);
+insert into order_line values(3,1,103,3);
+insert into order_line values(4,2,105,3);
+insert into order_line values(5,3,107,3);
+insert into order_line values(1,1,102,4);
+insert into order_line values(2,1,110,4);
+insert into order_line values(3,1,100,5);
+insert into order_line values(4,2,101,5);
+insert into order_line values(6,2,111,1);
+insert into order_line values(7,1,201,1);
+insert into order_line values(8,1,311,2);
+insert into order_line values(7,3,104,2);
+
+insert into deliver_address values(1,'lajpat','nagar',null,110010,'Delhi');
+insert into deliver_address values(2,'402 house','sector52','dwarka',110201,'Delhi');
+insert into deliver_address values(3,'pratap','nagar',null,110310,'Delhi');
+insert into deliver_address values(4,'palm greens','sector90','aerospace',110402,'Gurgaon');
+insert into deliver_address values(5,'50garden','greens','southex',110120,'Delhi');
+
+insert into date_dim values (to_date('08-NOV-2018','DD-MON-YYYY'), 2018);
+insert into date_dim values (to_date('09-NOV-2018','DD-MON-YYYY'), 2018);
+insert into date_dim values (to_date('10-NOV-2018','DD-MON-YYYY'), 2018);
+insert into date_dim values (to_date('08-APR-2019','DD-MON-YYYY'), 2019);
+insert into date_dim values (to_date('10-APR-2019','DD-MON-YYYY'), 2019);
+insert into date_dim values (to_date('08-APR-2019','DD-MON-YYYY'), 2020);
+insert into date_dim values (to_date('09-APR-2019','DD-MON-YYYY'), 2020);
+
+insert into product values (100,'talc');
+insert into product values (101,'cream');
+insert into product values (102,'spices');
+insert into product values (103,'water');
+insert into product values (104,'milk');
+insert into product values (105,'egg');
+insert into product values (107,'bread');
+insert into product values (108,'banana');
+insert into product values (109,'apple');
+insert into product values (110,'coke');
+insert into product values (111,'pepsi');
+insert into product values (201,'orange');
+insert into product values (311,'oil');
+
+select distinct ol.product_id, p.pname
+from orders o join order_line ol on o.order_id = ol.order_id
+join date_dim dd on dd.eff_dt = o.order_date and dd.eff_year = 2018 
+join product p on ol.product_id = p.pid
+
+```
+
 </details>
 
 ## Sales rep who sold most amount of products as per amount 

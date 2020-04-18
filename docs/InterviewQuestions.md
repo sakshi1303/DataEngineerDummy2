@@ -1254,6 +1254,21 @@ left outer join
 (select e.mgr emp from scott.emp e group by mgr having count(*) > 3) e2
 on e1.empno=e2.emp;
 
+create table emp
+( empid number,
+  ename varchar2(50),
+  deptid number,
+  mgrid number
+);
+
+insert into emp values(1,'John',1,null);
+insert into emp values(2,'Mary',1,1);
+insert into emp values(3,'Rose',1,1);
+insert into emp values(4,'Mac',2,null);
+insert into emp values(5,'Paul',2,4);
+insert into emp values(6,'Elsa',2,5);
+insert into emp values(7,'Belly',2,5);
+
 ```
 </details>
 

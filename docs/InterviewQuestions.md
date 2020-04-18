@@ -1208,6 +1208,13 @@ orders o2
 on o1.order_day=o2.order_Day and o1.order_id=o2.order_id
 and o2.processing_day = (select max(o3.processing_Day) from  orders o3 where o1.order_day=o3.order_day and o1.order_id=o3.order_id and o3.processing_day < o1.processing_Day); 
 
+select o1.order_day, o1.order_id, o1.processing_day, max(o2.processing_day)
+from orders o1 left outer join orders o2 on o1.order_id = o1.order_id
+and o1.order_day = o2.order_day
+and o1.processing_day > o2.processing_day
+group by o1.order_day, o1.order_id, o1.processing_day
+order by 1, 2
+
 ```
 
 ``` sql

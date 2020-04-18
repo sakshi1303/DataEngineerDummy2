@@ -1055,6 +1055,72 @@ group by vf.song_id , dd.eff_year))
 select song_id , eff_year , song_pop 
 from t t1 where t1.song_pop >=ALL(select t2.song_pop from t t2 where t1.song_id=t2.song_id AND t2.eff_year between t1.eff_year -2 and t1.eff_year );
 
+insert into song_dim values(1, 'coldplay');
+insert into song_dim values(2, 'somebody');
+insert into song_dim values(3, 'numb');
+insert into song_dim values(4, 'our song');
+insert into song_dim values(5, 'complicated');
+insert into song_dim values(6, 'dance');
+insert into song_dim values(7, 'shape');
+
+
+insert into views_fact values(1, 10, to_date('08-APR-2020','DD-MON-YYYY'));
+insert into views_fact values(2, 15, to_date('08-APR-2020','DD-MON-YYYY'));
+insert into views_fact values(1, 10, to_date('09-APR-2020','DD-MON-YYYY'));
+insert into views_fact values(2, 25, to_date('09-APR-2020','DD-MON-YYYY'));
+insert into views_fact values(3, 40, to_date('10-APR-2020','DD-MON-YYYY'));
+insert into views_fact values(2, 10, to_date('06-APR-2020','DD-MON-YYYY'));
+insert into views_fact values(3, 20, to_date('16-APR-2020','DD-MON-YYYY'));
+insert into views_fact values(4, 70, to_date('10-APR-2020','DD-MON-YYYY'));
+insert into views_fact values(5, 90, to_date('10-APR-2020','DD-MON-YYYY'));
+insert into views_fact values(6, 10, to_date('09-APR-2020','DD-MON-YYYY'));
+insert into views_fact values(7, 15, to_date('09-APR-2020','DD-MON-YYYY'));
+insert into views_fact values(1, 50, to_date('16-AUG-2019','DD-MON-YYYY'));
+insert into views_fact values(2, 70, to_date('08-AUG-2019','DD-MON-YYYY'));
+insert into views_fact values(3, 80, to_date('10-AUG-2019','DD-MON-YYYY'));
+insert into views_fact values(6, 20, to_date('09-AUG-2019','DD-MON-YYYY'));
+insert into views_fact values(7, 20, to_date('09-AUG-2019','DD-MON-YYYY'));
+insert into views_fact values(1, 20, to_date('06-APR-2020','DD-MON-YYYY'));
+insert into views_fact values(2, 30, to_date('05-APR-2020','DD-MON-YYYY'));
+insert into views_fact values(3, 50, to_date('07-APR-2020','DD-MON-YYYY'));
+
+
+insert into date_dim values(to_date('06-APR-2020','DD-MON-YYYY'), 2020);
+insert into date_dim values(to_date('07-APR-2020','DD-MON-YYYY'), 2020);
+insert into date_dim values(to_date('08-APR-2020','DD-MON-YYYY'), 2020);
+insert into date_dim values(to_date('09-APR-2020','DD-MON-YYYY'), 2020);
+insert into date_dim values(to_date('10-APR-2020','DD-MON-YYYY'), 2020);
+insert into date_dim values(to_date('16-APR-2020','DD-MON-YYYY'), 2020);
+insert into date_dim values(to_date('08-AUG-2019','DD-MON-YYYY'), 2019);
+insert into date_dim values(to_date('09-AUG-2019','DD-MON-YYYY'), 2019);
+insert into date_dim values(to_date('10-AUG-2019','DD-MON-YYYY'), 2019);
+insert into date_dim values(to_date('16-AUG-2019','DD-MON-YYYY'), 2019);
+
+select * from
+(
+select sv.*, dense_rank() over (order by sv.sum_views desc) rn
+from
+(
+select vf.song_id, sum(vf.views) sum_views
+from views_fact vf join date_dim dd on vf.eff_dt = dd.eff_dt
+and dd.eff_year = '2020'
+group by vf.song_id
+)sv
+) where rn <=5;
+
+select * from
+(
+select sv.*,
+sum_views  - lag(sum_views) over (partition by song_id order by eff_year)  diff
+from
+(select vf.song_id, dd.eff_year, sum(vf.views) sum_views 
+from views_fact vf join date_dim dd on vf.eff_dt = dd.eff_dt
+group by vf.song_id, dd.eff_year
+order by vf.song_id, dd.eff_year
+) sv
+) where diff > 0;
+
+
 ```
 
 </details>

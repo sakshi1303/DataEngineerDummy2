@@ -707,6 +707,44 @@ reservation_id number);
 ## Create a data model for IPL considering we have to calculate how many batsman have scored more than 15% runs as compared to last year.
 
 <details>
+
+```sql
+
+batsman
+batsman_id
+batsman_name
+
+match
+match_id
+match_date
+match_time
+
+ipl
+batsman_id
+match_id
+runs_scored
+year
+
+
+create table ipl_score
+(batsman_id number , match_id number, score number, year_date number);
+
+insert all
+into ipl_score values (1,1,10,2018)
+into ipl_score values (1,2,15,2018)
+into ipl_score values (1,3,100,2018)
+into ipl_score values (2,1,101,2018)
+into ipl_score values (2,2,115,2018)
+into ipl_score values (2,3,90,2018)
+into ipl_score values (1,1,45,2019)
+into ipl_score values (1,2,155,2019)
+into ipl_score values (1,3,60,2019)
+into ipl_score values (2,1,10,2019)
+into ipl_score values (2,2,20,2019)
+into ipl_score values (2,3,100,2019)
+select 1 from dual;
+```
+
 <summary>Answer</summary>
   
 ```sql

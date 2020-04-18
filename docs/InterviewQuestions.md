@@ -951,7 +951,7 @@ create table orders(
 order_id number,
 customer_id number,
 order_date date,
-order_time timestamp(6),
+order_time varchar(20),
 order_amount number);
 
 create table order_line(
@@ -976,6 +976,39 @@ deliver_address using(delivery_address_id)
 where customer_id= :customer_id ;
 
 ```
+```sql
+insert into orders values(1, 1, to_date('08-APR-2020','DD-MON-YYYY'),'10AM',500);
+insert into orders values(2, 1, to_date('09-APR-2020','DD-MON-YYYY'),'10AM',700);
+insert into orders values(3, 2, to_date('08-APR-2020','DD-MON-YYYY'),'9AM',400);
+insert into orders values(4, 2, to_date('10-APR-2020','DD-MON-YYYY'),'10AM',500);
+insert into orders values(5, 3, to_date('08-APR-2020','DD-MON-YYYY'),'10AM',800);
+
+insert into order_line values(1,1,104,1);
+insert into order_line values(1,2,107,2);
+insert into order_line values(2,1,103,3);
+insert into order_line values(2,2,105,3);
+insert into order_line values(2,3,107,3);
+insert into order_line values(3,1,102,4);
+insert into order_line values(4,1,110,4);
+insert into order_line values(5,1,100,5);
+insert into order_line values(5,2,101,5);
+
+insert into deliver_address values(1,'lajpat','nagar',null,110010,'Delhi');
+insert into deliver_address values(2,'402 house','sector52','dwarka',110201,'Delhi');
+insert into deliver_address values(3,'pratap','nagar',null,110310,'Delhi');
+insert into deliver_address values(4,'palm greens','sector90','aerospace',110402,'Gurgaon');
+insert into deliver_address values(5,'50garden','greens','southex',110120,'Delhi');
+
+select * from 
+(select  o.*, da.delivery_address_id,
+dense_rank() over (order by o.order_id desc) rn
+from orders o join order_line ol on o.order_id = ol.order_id
+join deliver_address da on ol.delivery_address_id = da.delivery_address_id
+where o.customer_id = 1 
+) where rn <=3;
+
+```
+
 </details>
 
 ## Top five views per year and increase consistent views per year

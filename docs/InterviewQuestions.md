@@ -1891,6 +1891,38 @@ representative r
 on r.repr_id=o.repr_id 
 group by r.repr_name 
 
+create table sales
+(salesid number,
+name varchar2(50)
+);
+
+
+create table orders
+( orderid number,
+  salesid number,
+  productid number,
+  amount number
+);
+
+insert into sales values(1, 'John');
+insert into sales values(2, 'Mary');
+insert into sales values(3, 'Rosy');
+insert into sales values(4, 'Paul');
+
+insert into orders values (1, 1, 101, 350);
+insert into orders values (2, 2, 111, 200);
+insert into orders values (3, 1, 201, 700);
+insert into orders values (4, 2, 107, 400);
+insert into orders values (5, 3, 105, 300);
+insert into orders values (6, 4, 101, 350);
+
+with temp as(
+select s.salesid, sum(amount) amt
+from sales s join orders o on s.salesid = o.salesid
+group by s.salesid
+)select s.*, temp.amt from temp join sales s on s.salesid = temp.salesid
+where amt = (select max(amt) from temp)
+
 ```
 </details>
 

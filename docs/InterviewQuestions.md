@@ -1131,6 +1131,35 @@ order by vf.song_id, dd.eff_year
 <summary>Answer</summary>
   
 ```sql
+
+create table emp
+(empid number,
+deptid number,
+salary number
+);
+
+insert into emp values(1, 1, 100000);
+insert into emp values(2, 1, 200000);
+insert into emp values(3, 1, 300000);
+insert into emp values(4, 2, 500000);
+insert into emp values(5, 3, 400000);
+insert into emp values(6, 3, 100000);
+insert into emp values(7, 4, 800000);
+insert into emp values(8, 5, 200000);
+
+with temp as
+(
+select
+empid,
+sum(case when salary between 100000 and 200000 then 1 end) as sal1,
+sum(case when salary between 200001 and 500000 then 1 end) as sal2,
+sum(case when salary > 500000  then 1 end) as sal3
+from emp
+group by empid
+)
+select 'TYPE' as cnt, sum(sal1), sum(sal2), sum(sal3)
+from temp;
+
 with t as (
 select 
 sum(case when d.deptno=30 then e.sal end) sum_30, 

@@ -1534,6 +1534,42 @@ scott.emp
 group by deptno ) e2 
 on e1.sal=e2.max_sal and e1.deptno=e2.deptno;
 
+create table emp
+(empid number,
+deptid number,
+salary number
+);
+
+insert into emp values(1, 1, 100000);
+insert into emp values(2, 1, 200000);
+insert into emp values(3, 1, 300000);
+insert into emp values(4, 2, 500000);
+insert into emp values(5, 3, 400000);
+insert into emp values(6, 3, 100000);
+insert into emp values(7, 4, 800000);
+insert into emp values(8, 5, 200000);
+
+select * from emp
+where (deptid, salary) in (
+select deptid, max(salary) max_sal
+from emp
+group by deptid
+);
+
+select e.* 
+from emp e join
+(
+select deptid, max(salary) max_sal
+from emp
+group by deptid) max_emp
+on e.deptid = max_emp.deptid
+and e.salary = max_emp.max_sal;
+
+select * from
+(select e.*, dense_rank() over (partition by deptid order by salary desc) rn
+from emp e
+) where rn = 1;
+
 ```
 </details>
 

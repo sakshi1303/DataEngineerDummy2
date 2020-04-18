@@ -1282,6 +1282,19 @@ Order_id | Order_day | Seller_id | Price|Quantity
 
 ```sql
 
+insert into seller values(1,'Paul','01-APR-2020',null);
+insert into seller values(2,'John','01-JAN-2020','31-MAR-2020');
+insert into seller values(3,'Mic','01-FEB-2020',null);
+insert into seller values(4,'Mary','10-MAR-2020',null);
+
+insert into orders values(1,'20-FEB-2020',2,100,3);
+insert into orders values(2,'11-JAN-2020',2,50,6);
+insert into orders values(3,'25-APR-2020',1,200,1);
+insert into orders values(4,'20-APR-2020',2,75,2);
+insert into orders values(5,'30-MAR-2020',3,300,2);
+insert into orders values(6,'20-APR-2020',4,10,5);
+insert into orders values(7,'20-FEB-2020',3,500,1);
+
 select 
 s.seller_id , sum(price*quantity) 
 from 

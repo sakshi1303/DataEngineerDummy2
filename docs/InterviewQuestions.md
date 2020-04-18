@@ -1698,6 +1698,37 @@ Tickets count Group per week basis on Team, Impact
   
 ```sql
 
+create table ticket
+(
+tid number,
+impact varchar2(10),
+createtime date
+);
+
+create table audits
+(
+aid number,
+tid number,
+createtime date,
+team varchar2(10)
+);
+
+insert into ticket values(1, 'sev1', '10-APR-2020');
+insert into ticket values(2, 'sev2', '03-APR-2020');
+insert into ticket values(3, 'sev1', '28-MAR-2020');
+insert into ticket values(4, 'sev2', '21-MAR-2020');
+insert into ticket values(5, 'sev3', '11-MAR-2020');
+
+
+insert into audits values (1, 1, '10-APR-2020', 'A');
+insert into audits values (2, 2, '03-APR-2020', 'B');
+insert into audits values (3, 1, '10-APR-2020', 'A');
+insert into audits values (4, 2, '03-APR-2020', 'B');
+insert into audits values (5, 3, '28-MAR-2020', 'A');
+insert into audits values (6, 4, '28-MAR-2020', 'C');
+insert into audits values (7, 4, '21-MAR-2020', 'A');
+insert into audits values (8, 5, '11-MAR-2020', 'B');
+
 select
 to_week(createtime) , team,impact,count(*)
 from(
@@ -1709,6 +1740,10 @@ join
 audit a 
 on t.tid=a.tid)
 group by to_week(createtime) , team,impact
+
+select t.createtime, a.team, t.impact, count(*)
+from ticket t join audits a on t.tid = a.tid
+group by a.team, t.impact, t.createtime;
 
 ```
 

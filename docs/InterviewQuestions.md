@@ -2324,3 +2324,122 @@ values(stg.customer_name, stg.customer_address, stg.customer_phone_no, stg.updat
 ```
 
 </details>
+
+## DWH - FACT Load
+
+```sql
+
+create table fund(
+fund_id number,
+fund_name varchar(50),
+ph_fund_id number
+);
+
+create table security_master(
+security_id number,
+security_type varchar(20),
+effective_date date,
+expiration_date date,
+mdm_security_id number
+);
+
+create table date_dim(
+date_dim_id number,
+effective_date date,
+week_num number,
+month_num number,
+year_num number
+);
+
+
+create table holding_stg(
+ph_fund_id number,
+mdm_security_id number,
+effective_date date,
+traded_value number,
+market_value number,
+process_date date
+);
+
+create table holding(
+fund_id number,
+ph_fund_id number,
+security_id number,
+mdm_security_id number,
+effective_date date,
+traded_value number,
+market_value number,
+process_date date
+);
+
+
+insert into fund values(1, 'Fidelity Fund', 11);
+insert into fund values(2, 'TCS Fund A', 22);
+insert into fund values(3, 'YES Bank Fund', 33);
+insert into fund values(4, 'HDFC Fund', 44);
+insert into fund values(5, 'ICICI Fund', 55);
+
+
+insert into security_master values(1000, 'Cash', to_date('10-JAN-2020','DD-MON-YYYY'), to_date('31-DEC-9999','DD-MON-YYYY'), 10110);
+insert into security_master values(1001, 'Equity', to_date('10-JAN-2020','DD-MON-YYYY'), to_date('10-APR-2020','DD-MON-YYYY'), 10111);
+insert into security_master values(1002, 'Bond', to_date('01-APR-2020','DD-MON-YYYY'), to_date('31-DEC-9999','DD-MON-YYYY'), 10112);
+insert into security_master values(1003, 'MultiAsset', to_date('01-JAN-2020','DD-MON-YYYY'), to_date('31-DEC-9999','DD-MON-YYYY'), 10113);
+insert into security_master values(1004, 'Gold', to_date('20-FEB-2020','DD-MON-YYYY'), to_date('20-MAR-2020','DD-MON-YYYY'), 10114);
+insert into security_master values(1005, 'Equity', to_date('11-APR-2020','DD-MON-YYYY'), to_date('31-DEC-9999','DD-MON-YYYY'), 10111);
+insert into security_master values(1006, 'Gold', to_date('21-MAR-2020','DD-MON-YYYY'), to_date('31-DEC-9999','DD-MON-YYYY'), 10114);
+
+
+insert into date_dim values(20200101, to_date('01-JAN-2020','DD-MON-YYYY'), 1, 1, 2020);
+insert into date_dim values(20200110, to_date('10-JAN-2020','DD-MON-YYYY'), 2, 1, 2020);
+insert into date_dim values(20200220, to_date('20-FEB-2020','DD-MON-YYYY'), 8, 2, 2020);
+insert into date_dim values(20200320, to_date('20-MAR-2020','DD-MON-YYYY'), 12, 3, 2020);
+insert into date_dim values(20200401, to_date('01-APR-2020','DD-MON-YYYY'), 14, 4, 2020);
+insert into date_dim values(20200410, to_date('10-APR-2020','DD-MON-YYYY'), 15, 4, 2020);
+
+
+insert into holding_stg values(11, 10110, to_date('10-JAN-2020','DD-MON-YYYY'),1000, 1500, to_date('11-JAN-2020','DD-MON-YYYY'));  
+insert into holding_stg values(22, 10111, to_date('01-APR-2020','DD-MON-YYYY'),2000, 2500, to_date('02-APR-2020','DD-MON-YYYY'));  
+insert into holding_stg values(33, 10113, to_date('10-JAN-2020','DD-MON-YYYY'),1500, 3000, to_date('11-JAN-2020','DD-MON-YYYY'));  
+--insert into holding_stg values(11, 10110, to_date('10-JAN-2020','DD-MON-YYYY'),1000, 1000, to_date('11-JAN-2020','DD-MON-YYYY'));  
+--insert into holding_stg values(11, 10110, to_date('10-JAN-2020','DD-MON-YYYY'),1000, 1000, to_date('11-JAN-2020','DD-MON-YYYY'));  
+
+select * from fund;
+select * from security_master ;
+select * from date_dim;
+select * from holding_stg;
+select * from holding;
+
+```
+
+<details>
+  <summary>Answer</summary>
+
+```sql
+
+insert into holding(fund_id, ph_fund_id, security_id, mdm_security_id, effective_date, traded_value, market_value, process_date)
+select f.fund_id, stg.ph_fund_id, sm.security_id, stg.mdm_security_id, stg.effective_date, stg.traded_value, stg.market_value, stg.process_date 
+from holding_stg stg 
+left outer join fund f on stg.ph_fund_id = f.ph_fund_id
+left outer join security_master sm on stg.mdm_security_id = sm.mdm_security_id 
+and stg.effective_date between sm.effective_date and sm.expiration_date;
+
+```
+
+</details>
+
+## DWH - Reporting Query
+
+<details>
+  <summary>Answer</summary>
+
+```sql
+
+select f.fund_name, hld.* 
+from holding hld join fund f on f.fund_id = hld.fund_id
+join security_master sm on sm.security_id = hld.security_id
+join date_dim dd on hld.effective_date = dd.effective_date
+where dd.month_num = 1
+
+```
+</details>
+

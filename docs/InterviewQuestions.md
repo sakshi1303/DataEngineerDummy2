@@ -1282,6 +1282,21 @@ Order_id | Order_day | Seller_id | Price|Quantity
 
 ```sql
 
+create table seller
+(seller_id number,
+seller_name varchar2(20),
+start_date date,
+end_date date);
+
+create table orders
+(
+order_id number,
+order_day date,
+seller_id number,
+price number,
+quantity number);
+
+
 insert into seller values(1,'Paul','01-APR-2020',null);
 insert into seller values(2,'John','01-JAN-2020','31-MAR-2020');
 insert into seller values(3,'Mic','01-FEB-2020',null);

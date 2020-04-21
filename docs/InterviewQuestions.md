@@ -1482,6 +1482,19 @@ where ra2.rating_date = (select max(rating_date) from rating ra3 where ra3.revie
 on re.reviewer_id = r.reviewer_id 
 where ratings > lag_ratings  ;
 
+select rw.reviewer_name from reviewer rw join
+(
+select r1.movie_id, r1.reviewer_id, r1.rating_date, max(r2.rating_date), (min(r1.ratings) - min(r2.ratings)) diff
+from rating r1 left outer join rating r2 
+on r1.movie_id = r2.movie_id  
+and r1.reviewer_id =  r2.reviewer_id
+and r1.rating_date > r2.rating_date
+--order by 2,3,4,5,7,8,9
+group by r1.movie_id, r1.reviewer_id, r1.rating_date
+having (min(r1.ratings) - min(r2.ratings)) > 0
+order by 1,2,3
+) temp on rw.reviewer_id = temp.reviewer_id
+
 ```
 </details>
 

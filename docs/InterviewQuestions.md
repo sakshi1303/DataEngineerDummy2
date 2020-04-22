@@ -462,6 +462,7 @@ find <Path_To_Old_Files> -type f -mtime +30 -exec rm -f {} \;
  
 Use audit dimension or hash values to compare data.
 
+```sql
 create table src_tbl
 ( srcid number,
   srcdate date
@@ -513,6 +514,7 @@ update log_tbl
 set cutoff = (select max(srcdate)from stg)
 where jobid = (select jobid from job where jobcode = 'DBLOAD') and cutoff IS NUll;
 
+```
 
 </details>
 

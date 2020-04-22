@@ -462,6 +462,58 @@ find <Path_To_Old_Files> -type f -mtime +30 -exec rm -f {} \;
  
 Use audit dimension or hash values to compare data.
 
+create table src_tbl
+( srcid number,
+  srcdate date
+);
+
+create table log_tbl
+(logid number,
+jobid number,
+status varchar(10),
+startdate date,
+enddate date,
+cutoff date
+);
+
+create table job
+(jobid number,
+jobcode varchar2(20)
+);
+
+create table stg as select * from src_tbl where 1=2;
+
+insert into src_tbl values(123, to_date('20-APR-2020','DD-MON-YYYY'));
+insert into src_tbl values(456, to_date('21-APR-2020','DD-MON-YYYY'));
+insert into src_tbl values(789, to_date('22-APR-2020','DD-MON-YYYY'));
+insert into src_tbl values(789, to_date('23-APR-2020','DD-MON-YYYY'));
+
+
+insert into log_tbl values(1,1,'OK','20-APR-2020','20-APR-2020','20-APR-2020');
+insert into log_tbl values(2,2,'OK','20-APR-2020','20-APR-2020','20-APR-2020');
+insert into log_tbl values(3,1,'OK','21-APR-2020','21-APR-2020','21-APR-2020');
+insert into log_tbl values(4,1,'NOTOK','22-APR-2020','22-APR-2020','22-APR-2020');
+insert into log_tbl values(5,1,'OK','22-APR-2020','22-APR-2020','22-APR-2020');
+
+
+insert into job values(1, 'DBLOAD');
+insert into job values(2, 'DBREAD');
+
+
+insert into stg
+select * from src_tbl where srcdate > 
+(select cutoff from log_tbl
+where logid = (select max(logid) from log_tbl where status ='OK' 
+               and jobid = (select jobid from job where jobcode = 'DBLOAD'))
+);
+
+insert into log_tbl values ((select max(logid) from log_tbl), 1, 'OK', SYSDATE, SYSDATE, NULL);
+
+update log_tbl
+set cutoff = (select max(srcdate)from stg)
+where jobid = (select jobid from job where jobcode = 'DBLOAD') and cutoff IS NUll;
+
+
 </details>
 
 ## Difference between range and xrange.

@@ -518,6 +518,22 @@ where jobid = (select jobid from job where jobcode = 'DBLOAD') and cutoff IS NUl
 
 </details>
 
+<details>
+<summary>Answer2</summary>
+
+```sql
+
+*Orders table: *ORDER_ID | CUSTOMER_ID | ORDER_STATUS | ORDER_DATE | DELIVERY_ADDRESS
+
+*Order Items table:* ORDER_ITEM_ID | ORDER_ID | QUANTITY | UNIT_COST | TAX
+
+*Denormalised table:*
+ORDER_ID | ORDER_DATE| ORDER_ITEM_ID | CUSTOMER_ID | ORDER_STATUS | QUANTITY | SALE_AMOUNT | DELIVERY_ADDRESS
+
+```
+
+</details>
+
 ## Difference between range and xrange.
 
 <details>
@@ -2603,10 +2619,10 @@ FROM REGIONS R
 
 ## Merge New data to view
 
-*I have a view consisting of shipments information. 
+I have a view consisting of shipments information. 
 The view consists of 1 billion records. The view gets refreshed each day with new or updated data. 
 State how will you persist this huge data in the view. 
-Write a strategy of how you can effectively merge new data to this view*.
+Write a strategy of how you can effectively merge new data to this view.
 
 Sample Columns:
 SHIPMENT_ID    SHIP_DAY
@@ -2614,7 +2630,7 @@ SHIPMENT_ID    SHIP_DAY
 Consider any master table / datastet and create a view on top- of that if needed.
 
 <details>
-  <summary>Answer2</summary>
+  <summary>Answer</summary>
 
 ```sql
 
@@ -2636,3 +2652,34 @@ SELECT SHIPMENT_ID, SHIP_DAY FROM SHIPMENT;
 
 ```
 </details>
+
+## Latest Update of an Order
+
+I have a custom data store in which data is stored in files. Each file indicates a partition.
+I can only append data to a partition but not delete it. I have a table which consists of Orders data.
+Partition of this table is on Order_day. For certain orders order_day keep on changing which means a particular order would 
+reside on multiple partitions. Now if I query these partitions I will get multiple entries for a given order_id.
+Can you suggest me a strategy so that I get only the lastest update of an order after querying the partitions.
+
+<details>
+  <summary>Answer</summary>
+
+```sql
+
+order_id  order_date processing_day
+1          22/04      22/04
+1          23/04      23/04
+1          21/04      24/04 
+
+
+select * from
+(
+select o.*,
+dense_rank() over (order by processing_day desc) rn 
+from orders o
+where order_id = 1
+) where rn = 1
+
+```
+  
+</details>  

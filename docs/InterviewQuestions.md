@@ -2497,3 +2497,106 @@ where dd.month_num = 1
 ```
 </details>
 
+## SQL Validation and Tuning
+
+Given four tables ORDERS, REGIONS, ITEMS, DE_NOM_TABLE <De-normalised table containing previous 
+day data of first three tables> and a sample SQL query to extract certain information from 
+all these tables. Estimated number of rows in each of these tables are 20 million, 6000, 
+50 million and 30 million respectively. All the columns in above mentioned tables are Nullable. 
+Validate whether the SQL query is fine tuned for performance and optimise the query if required.
+
+```sql
+ 
+> ORDERS
+order_id	order_date	district
+O1			2020/01/09	D1
+O2			2020/01/03	D2
+O3			2020/01/12	D2
+O4			2020/04/09	D3
+O5			2020/02/09	D4
+O6			2020/02/15	D5
+O7			2020/05/12	D6
+
+> ITEMS
+order_id	item_id
+O1			I3
+O1			I1
+O1			I2
+O2			I4
+O2			I5
+O3			I6
+O4			I7
+O5			I8
+O6			I11
+O6			I10
+O6			I9
+O7			I12
+
+
+> REGIONS
+city	district	country
+C1		D1			R1
+C2		D1			R1
+C5		D2			R1
+C3		D2			R1
+C6		D2			R1
+C4		D2			R1
+C7		D2			R1
+C8		D3			R2
+C9		D4			R2
+C10		D5			R3
+
+=== QUERY ===
+SELECT ORDER_ID, ITEM_ID, ORDER_DATE 
+FROM DE_NOM_TABLE 
+MINUS 
+(SELECT T1.ORDER_ID, T2.ITEM_ID, T3.COUNTRY, T1.ORDER_DATE
+FROM ORDERS T1
+INNER JOIN 
+ITEMS T2 ON (T1.ORDER_ID = T2.ORDER_ID)
+INNER JOIN 
+REGIONS T3 ON (T1.DISTRICT = T3.DISTRICT)
+GROUP BY 1,2,3,4
+HAVING T1.ORDER_DATE BETWEEN TO_DATE('2020-01-01','YYYY-MM-DD') AND TO_DATE('2020-03-01','YYYY-MM-DD'));
+
+```
+
+<details>
+  <summary>Answer1</summary>
+
+```sql
+
+SELECT ORDER_ID, ITEM_ID, COUNTRY, ORDER_DATE 
+FROM DE_NOM_TABLE T LEFT OUTER JOIN 
+(SELECT /*+ PARALLEL */
+T1.ORDER_ID, T2.ITEM_ID, T3.COUNTRY, T1.ORDER_DATE
+FROM ORDERS T1
+INNER JOIN 
+ITEMS T2 ON (T1.ORDER_ID = T2.ORDER_ID)
+INNER JOIN 
+REGIONS T3 ON (T1.DISTRICT = T3.DISTRICT) and T3.country ='R1'
+WHERE T1.ORDER_DATE BETWEEN TO_DATE('2020-01-01','YYYY-MM-DD') AND TO_DATE('2020-03-01','YYYY-MM-DD')
+GROUP BY T1.ORDER_ID, T2.ITEM_ID, T3.COUNTRY, T1.ORDER_DATE) O
+ON T.ORDER_ID = O.ORDER_ID AND T.ITEM_ID = O.ITEM_ID 
+AND T.COUNTRY = O.COUNTRY AND T.ORDER_DATE = O.ORDER_DATE
+WHERE O.ORDER_ID IS NULL;
+
+```  
+</details>  
+
+<details>
+  <summary>Answer2</summary>
+  
+```sql
+
+SELECT DISTINCT R.COUNTRY
+FROM ORDERS O INNER JOIN REGIONS R ON O.DISTRICT = R.DISTRICT;
+
+SELECT * 
+FROM ORDERS O INNER JOIN 
+(SELECT DISTINCT R.DISTRICT, R.COUNTRY
+FROM REGIONS R
+) ON O.DISTRICT = R.DISTRICT;
+
+```
+</details>  

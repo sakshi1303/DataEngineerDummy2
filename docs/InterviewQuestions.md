@@ -2600,3 +2600,39 @@ FROM REGIONS R
 
 ```
 </details>  
+
+## Merge New data to view
+
+*I have a view consisting of shipments information. 
+The view consists of 1 billion records. The view gets refreshed each day with new or updated data. 
+State how will you persist this huge data in the view. 
+Write a strategy of how you can effectively merge new data to this view*.
+
+Sample Columns:
+SHIPMENT_ID    SHIP_DAY
+
+Consider any master table / datastet and create a view on top- of that if needed.
+
+<details>
+  <summary>Answer2</summary>
+
+```sql
+
+CREATE TABLE SHIPMENT
+(SHIPMENT_ID NUMBER,
+SHIP_DAY     DATE
+)
+PARTITION ON(SHIP_DAY)
+NUMDSTOINTERVAL;
+
+CREATE INDEX 
+
+1. CREATE MATERIALISED VIEW LOG ON SHIPMENT;
+CREATE MATERIALISED VIEW SHPMENT_MV
+BUILD IMMEDIATE
+REFRESH ON COMMIT
+AS
+SELECT SHIPMENT_ID, SHIP_DAY FROM SHIPMENT;
+
+```
+</details>

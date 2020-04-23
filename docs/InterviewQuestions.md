@@ -2681,5 +2681,62 @@ where order_id = 1
 ) where rn = 1
 
 ```
-  
 </details>  
+
+## Get OrderId and Cost in local currency as on order_date placed
+
+```sql
+Orders
+order_id customer_id product_id order_date country_code cost(USD)
+
+Customers
+customer_id customer_name customer_address email phone_no
+
+Products
+product_id product_name category country_code
+
+Exchange_Rate
+country_code country rate valid_from valid_to
+
+```
+
+<details>
+  <summary>Answer</summary>
+ 
+```sql 
+select order_id, cost * ex.rate as cost_local
+from orders o join exchange_rate ex on o.country_code = ex.country_code 
+and o.order_date between ex.valid_from and ex.valid_to;
+
+select order_id, sum(cost * ex.rate) as cost_local
+from orders o join exchange_rate ex on o.country_code = ex.country_code 
+and o.order_date between ex.valid_from and NVL(ex.valid_to,'31-DEC-99')
+group by order_id;
+
+```
+</details>  
+
+## Get the orderid for product 'P001' and 'P002' in the same order_id
+
+<details>
+  <summary>Answer</summary>
+
+```sql
+
+select distinct order_id
+from orders o1 join orders o2
+where o1.product_id = 'P001' and o2.product_id = 'P002';
+
+select distinct order_id
+from
+(
+select o.*,
+product_id as prod1, lag(product_id) over (partition by order_id order by product_id) as prod2
+from orders o
+) 
+where (o.product_id = 'P001' or o.product_id = 'P002') 
+ and (o.product_id = 'P002' or o.product_id = 'P001');
+
+```
+ 
+</details>

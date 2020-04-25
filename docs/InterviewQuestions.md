@@ -609,6 +609,8 @@ end_date date
 insert into job_log_status values (1, 1, 'ENDEDOK', '23-APR-2020','24-APR-2020','24-APR-2020');
 insert into job_log_status values (2, 2, 'ENDEDOK', '23-APR-2020','24-APR-2020','24-APR-2020');
 
+#Solution1
+
 merge into order_den_tbl od
 using(
 select o.order_id, o.order_date, oi.order_item_id, o.customer_id, o.order_status, oi.quantity,
@@ -632,17 +634,41 @@ values(stg.order_id, stg.order_date, stg.order_item_id, stg.customer_id, stg.ord
 insert into job_log_status values ((select max(logid)+1 from job_log_status), 
     (select jobid from job_detail where jobname = 'ORDERDENOMLOAD'), 'ENDEDOK', 
     (select max(processing_day) from order_den_tbl),SYSDATE,SYSDATE);
-       
+
+#Solution 2
+
 update orders set order_status = 'Delivered' where order_id = 1;
+update order_item set quantity = 1 where order_id = 1 and order_item_id = 3;
+update order_item set unit_cost = 300 where order_id = 2 and order_item_id = 1;
        
 create unique index order_uq on orders(order_id);
+create unique index order_item_uq on order_item(order_id, order_item_id);
+
+insert into order_den_tbl
+select o.order_id, o.order_date, oi.order_item_id, o.customer_id, o.order_status, oi.quantity,
+(oi.unit_cost * oi.quantity ) + oi.tax as sale_amount, o.delivery_address, oi.processing_day as processing_day
+from orders o join order_item oi on o.order_id = oi.order_id;
+
+
+update 
+(select od.order_status as old_order_status, o.order_status as new_order_status
+from orders o join order_den_tbl od 
+on o.order_id = od.order_id
+where od.order_status <> o.order_status ) vw
+set vw.old_order_status = vw.new_order_status; 
+
 
 update
-(select od.order_status as old_order_status, o.order_status as new_order_status
-from orders o join order_den_tbl od on o.order_id = od.order_id
-where od.order_id = 1
+(
+select od.quantity as old_quantity, oi.quantity as new_quantity,
+  od.sale_amount as old_sale_amount, (oi.quantity * oi.unit_cost ) + oi.tax as new_sale_amount
+from order_item oi join order_den_tbl od 
+on oi.order_id = od.order_id
+and oi.order_item_id = od.order_item_id
+where (od.quantity <> oi.quantity OR od.sale_amount <> ( (oi.quantity * oi.unit_cost ) + oi.tax ) ) 
 ) vw
-set vw.old_order_status = vw.new_order_status; 
+set vw.old_quantity = vw.new_quantity,
+    vw.old_sale_amount = vw.new_sale_amount;
 
 ```
 

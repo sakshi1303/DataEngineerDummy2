@@ -644,10 +644,21 @@ update order_item set unit_cost = 300 where order_id = 2 and order_item_id = 1;
 create unique index order_uq on orders(order_id);
 create unique index order_item_uq on order_item(order_id, order_item_id);
 
+select max_process_date from 
+(
+select max(processing_day) as max_process_date from orders
+union
+select max(processing_day) from order_item
+);
+
 insert into order_den_tbl
 select o.order_id, o.order_date, oi.order_item_id, o.customer_id, o.order_status, oi.quantity,
-(oi.unit_cost * oi.quantity ) + oi.tax as sale_amount, o.delivery_address, oi.processing_day as processing_day
-from orders o join order_item oi on o.order_id = oi.order_id;
+(oi.unit_cost * oi.quantity ) + oi.tax as sale_amount, o.delivery_address, max_process_date as processing_day
+from orders o join order_item oi 
+on o.order_id = oi.order_id
+and ( o.processing_day > (select run_date from job_log_status where logid = (select max(logid) from job_log_status where jobid = 5) )
+   or od.processing_day > (select run_date from job_log_status where logid = (select max(logid) from job_log_status where jobid = 5) )
+);
 
 insert into job_log_status 
 values( (select max(logid)+1 from job_log_status), 

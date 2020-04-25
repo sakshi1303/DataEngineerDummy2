@@ -531,6 +531,120 @@ where jobid = (select jobid from job where jobcode = 'DBLOAD') and cutoff IS NUl
 ORDER_ID | ORDER_DATE| ORDER_ITEM_ID | CUSTOMER_ID | ORDER_STATUS | QUANTITY | SALE_AMOUNT | DELIVERY_ADDRESS
 
 ```
+```sql
+
+create table orders
+(order_id number,
+customer_id number,
+order_status varchar2(20),
+order_date date,
+delivery_address varchar2(100),
+processing_day date
+);
+
+create table order_item
+(
+order_item_id number,
+order_id number,
+quantity number,
+unit_cost number,
+tax number,
+processing_day date
+);
+
+create table order_den_tbl
+(
+order_id number,
+order_date date, 
+order_item_id number, 
+customer_id number,
+order_status varchar2(20),
+quantity number,
+sale_amount number, 
+delivery_address varchar2(100),
+processing_day date
+);
+
+
+insert into orders values (1, 1, 'Shipped', '20-APR-2020', 'London','24-APR-2020');
+insert into orders values (2, 1, 'Delivered', '10-APR-2020', 'Glassgow','24-APR-2020');
+insert into orders values (3, 2, 'Shipped', '21-APR-2020', 'Toronto','24-APR-2020');
+insert into orders values (4, 3, 'Packed', '22-APR-2020', 'Delhi','24-APR-2020');
+insert into orders values (5, 4, 'Delivered', '20-APR-2020', 'Mumbai','24-APR-2020');
+
+insert into order_item values(1, 1, 5, 100, 100,'24-APR-2020');
+insert into order_item values(2, 1, 1, 200, 100,'24-APR-2020');
+insert into order_item values(3, 1, 2, 150, 200,'24-APR-2020');
+insert into order_item values(1, 2, 1, 100, 50,'24-APR-2020');
+insert into order_item values(2, 2, 4, 100, 50,'24-APR-2020');
+insert into order_item values(1, 3, 2, 200, 100,'24-APR-2020');
+insert into order_item values(2, 3, 3, 200, 100,'24-APR-2020');
+insert into order_item values(1, 4, 1, 500, 100,'24-APR-2020');
+insert into order_item values(1, 5, 2, 500, 200,'24-APR-2020');
+
+
+create table job_detail
+(jobid number,
+jobname varchar2(20)
+);
+
+insert into job_detail values(1, 'ORDERLOAD');
+insert into job_detail values(2, 'ORDERITEMLOAD');
+insert into job_detail values(3, 'ORDERDELETE');
+insert into job_detail values(4, 'ORDERITEMDELETE');
+insert into job_detail values(5, 'ORDERDENOMLOAD');
+
+
+create table job_log_status
+(
+logid number,
+jobid number,
+status varchar2(20),
+run_date date,
+start_date date,
+end_date date
+);
+
+
+insert into job_log_status values (1, 1, 'ENDEDOK', '23-APR-2020','24-APR-2020','24-APR-2020');
+insert into job_log_status values (2, 2, 'ENDEDOK', '23-APR-2020','24-APR-2020','24-APR-2020');
+
+merge into order_den_tbl od
+using(
+select o.order_id, o.order_date, oi.order_item_id, o.customer_id, o.order_status, oi.quantity,
+(oi.unit_cost * oi.quantity ) + oi.tax as sale_amount, o.delivery_address, 
+o.processing_day as order_process_date, oi.processing_day as processing_day
+from orders o join order_item oi on o.order_id = oi.order_id
+) stg
+on (od.order_id = stg.order_id and od.order_date = stg.order_date 
+    and od.order_item_id = stg.order_item_id and od.customer_id = stg.customer_id)
+when matched then update
+  set od.order_status = stg.order_status,
+      od.quantity     = stg.quantity,
+      od.sale_amount  = stg.sale_amount,
+      od.delivery_address = stg.delivery_address,
+      od.processing_day   = stg.processing_day
+when not matched then 
+insert(order_id, order_date, order_item_id, customer_id, order_status, quantity, sale_amount, delivery_address,processing_day)
+values(stg.order_id, stg.order_date, stg.order_item_id, stg.customer_id, stg.order_status, 
+       stg.quantity, stg.sale_amount, stg.delivery_address,stg.processing_day);
+       
+insert into job_log_status values ((select max(logid)+1 from job_log_status), 
+    (select jobid from job_detail where jobname = 'ORDERDENOMLOAD'), 'ENDEDOK', 
+    (select max(processing_day) from order_den_tbl),SYSDATE,SYSDATE);
+       
+update orders set order_status = 'Delivered' where order_id = 1;
+       
+create unique index order_uq on orders(order_id);
+
+update
+(select od.order_status as old_order_status, o.order_status as new_order_status
+from orders o join order_den_tbl od on o.order_id = od.order_id
+where od.order_id = 1
+) vw
+set vw.old_order_status = vw.new_order_status; 
+
+```
 
 </details>
 

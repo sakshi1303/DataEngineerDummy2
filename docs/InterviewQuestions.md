@@ -661,7 +661,7 @@ from orders o join order_den_tbl od
 on o.order_id = od.order_id
 --where od.order_status <> o.order_status 
 where od.processing_day > (select run_date from job_log_status 
-  where logid = (select max(logid) from job_log_status where jobid = 5) ) 
+  where logid = (select max(logid) from job_log_status where jobid = 6) ) 
 ) vw
 set vw.old_order_status = vw.new_order_status; 
 

@@ -659,7 +659,10 @@ update
 (select od.order_status as old_order_status, o.order_status as new_order_status
 from orders o join order_den_tbl od 
 on o.order_id = od.order_id
-where od.order_status <> o.order_status ) vw
+--where od.order_status <> o.order_status 
+where od.processing_day > (select run_date from job_log_status 
+  where logid = (select max(logid) from job_log_status where jobid = 5) ) 
+) vw
 set vw.old_order_status = vw.new_order_status; 
 
 
@@ -670,7 +673,9 @@ select od.quantity as old_quantity, oi.quantity as new_quantity,
 from order_item oi join order_den_tbl od 
 on oi.order_id = od.order_id
 and oi.order_item_id = od.order_item_id
-where (od.quantity <> oi.quantity OR od.sale_amount <> ( (oi.quantity * oi.unit_cost ) + oi.tax ) ) 
+--where (od.quantity <> oi.quantity OR od.sale_amount <> ( (oi.quantity * oi.unit_cost ) + oi.tax ) ) 
+where od.processing_day > (select run_date from job_log_status 
+  where logid = (select max(logid) from job_log_status where jobid = 6) ) 
 ) vw
 set vw.old_quantity = vw.new_quantity,
     vw.old_sale_amount = vw.new_sale_amount;

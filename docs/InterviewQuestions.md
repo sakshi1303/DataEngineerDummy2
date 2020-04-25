@@ -649,6 +649,11 @@ select o.order_id, o.order_date, oi.order_item_id, o.customer_id, o.order_status
 (oi.unit_cost * oi.quantity ) + oi.tax as sale_amount, o.delivery_address, oi.processing_day as processing_day
 from orders o join order_item oi on o.order_id = oi.order_id;
 
+insert into job_log_status 
+values( (select max(logid)+1 from job_log_status), 
+  (select jobid from job_detail where jobname = 'ORDERDENOMINS'), 
+'ENDEDOK', (select max(processing_day) from order_den_tbl),SYSDATE,SYSDATE);
+
 
 update 
 (select od.order_status as old_order_status, o.order_status as new_order_status
@@ -669,7 +674,12 @@ where (od.quantity <> oi.quantity OR od.sale_amount <> ( (oi.quantity * oi.unit_
 ) vw
 set vw.old_quantity = vw.new_quantity,
     vw.old_sale_amount = vw.new_sale_amount;
-
+    
+insert into job_log_status 
+values( (select max(logid)+1 from job_log_status), 
+  (select jobid from job_detail where jobname = 'ORDERDENOMUPDT'), 
+'ENDEDOK', (select max(processing_day) from order_den_tbl),SYSDATE,SYSDATE);
+    
 ```
 
 </details>

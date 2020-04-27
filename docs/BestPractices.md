@@ -1,6 +1,6 @@
 1. Keep code modules as separate as possible . Go for reusability only once you have verified that you are repeating yourself. 
 
-2. Partitioning is the key when creating any data model . 
+2. Partitioning is the key when creating any data model . Whether  it is the fact table or stage table or error logging table there should always be a key on which the whole table is partitioned . In fact try and see if you have the capacity to go for sub partition as well. 
 
 3. Always have a testing module ready . 
 
@@ -9,3 +9,11 @@
 5. Point 4 is not an excuse for whole dataset testing. 
 
 6. Always try a combination of things before making any judgement. There is no right or wrong answer. Situation is different for each scenario. 
+
+7. In any ETL pipeline , delta  load is the key , you should have a defined process for loading only those records which are either failed or missed. 
+
+8. Performance is of most importance. All other problems are solved easily once you factor in high performance. There is a great pushback from business community about being functionally correct. However, we still need to focus on performance because it improves overall productivity.
+
+9. A table should either have huge number of rows or huge number of columns but never both. This is the first step in performance resolution .
+
+10. Complex SQL queries should be used , however it should be limited to 4 or 5 tables. Anything more than that you should either change your data model or create a staging/temporary table to apply further logic. 

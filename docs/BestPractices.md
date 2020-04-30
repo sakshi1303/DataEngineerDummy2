@@ -18,6 +18,8 @@
 
 10. Complex SQL queries should be used , however it should be limited to 4 or 5 tables. Anything more than that you should either change your data model or create a staging/temporary table to apply further logic. 
 
+11. Real art is chunking the data into smaller logical parts , there is no science behind it. Those which should be logically different must be kept differently. Using parallelism is a waste of time. Use multithreading. 
+
 11. Oracle Parallel doesnot work properly. Instead use your own multithreading programming method to enhance the performance. 
 
 12. Testing is key , more tests/testcases you do , better will be your performance. 

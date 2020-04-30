@@ -21,3 +21,5 @@
 11. Oracle Parallel doesnot work properly. Instead use your own multithreading programming method to enhance the performance. 
 
 12. Testing is key , more tests/testcases you do , better will be your performance. 
+
+13. Do not depend on testers for testing , as a developer it will be beneficial for you if you do end to end testing so that issues do not resurface. 

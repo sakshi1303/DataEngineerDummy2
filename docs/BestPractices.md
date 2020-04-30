@@ -17,3 +17,7 @@
 9. A table should either have huge number of rows or huge number of columns but never both. This is the first step in performance resolution .
 
 10. Complex SQL queries should be used , however it should be limited to 4 or 5 tables. Anything more than that you should either change your data model or create a staging/temporary table to apply further logic. 
+
+11. Oracle Parallel doesnot work properly. Instead use your own multithreading programming method to enhance the performance. 
+
+12. Testing is key , more tests/testcases you do , better will be your performance. 

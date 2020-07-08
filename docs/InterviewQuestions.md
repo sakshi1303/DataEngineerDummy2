@@ -2816,6 +2816,11 @@ REFRESH ON COMMIT
 AS
 SELECT SHIPMENT_ID, SHIP_DAY FROM SHIPMENT;
 
+2. PARTITION TABLE with DAY/MONTH as required.
+Whenever data volume is high, PARTITIONING IS MUST.
+Use JOIN and FILTERS to effectively fetch the records required ONLY to be UPDATED.
+For INSERTION - create new parition with new records.
+
 ```
 </details>
 

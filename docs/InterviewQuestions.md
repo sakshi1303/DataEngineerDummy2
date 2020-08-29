@@ -1552,7 +1552,7 @@ from
 seller s 
 left outer join 
 order o
-on s.seller_id=o.seller_id and o.order_day between s.start_Date and s.end_Date
+on s.seller_id=o.seller_id and o.order_day between s.start_Date and NVL(s.end_Date,'31-DEC-9999')
 group by s.seller_id ;
 
 ```
